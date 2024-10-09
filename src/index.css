@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  box-sizing: border-box
+}
+
+.dark-bg {
+  @apply bg-[#1E1E1E];
+}
+
+.article-style {
+  @apply text-[#F5F5F5] text-lg;
+}
+
+.article-heading {
+  @apply text-[#F5F5F5] text-5xl my-8;
+}
+
+/* Make underline grow on hover */
+
+.link {
+  @apply text-[#F5F5F5] text-lg underline;
+}

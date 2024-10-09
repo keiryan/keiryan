@@ -1,8 +1,8 @@
 import { createWebHistory, createRouter } from "vue-router";
 
-import Home from "./pages/Home.vue";
 import VueIosToggle from "./pages/VueIosToggle.vue";
 import Contact from "./pages/Contact.vue";
+import Home from "./pages/Home.vue";
 
 // import AboutView from './AboutView.vue'
 

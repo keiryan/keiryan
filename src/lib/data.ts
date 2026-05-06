@@ -8,8 +8,8 @@ export const siteConfig = {
   phone: "(404) 360-3613",
   location: "Leland, NC",
   social: {
-    github: "#",
-    linkedin: "#",
+    github: "https://github.com/keiryan",
+    linkedin: "https://www.linkedin.com/in/keiryan/",
   },
 };
 
@@ -27,6 +27,92 @@ export const hobbies = [
   { emoji: "✍️", label: "Writing", note: "Trying to get better at saying things clearly." },
   { emoji: "🎧", label: "Music", note: "Always have something going. Genre varies wildly." },
   { emoji: "🤖", label: "AI & Ops", note: "The day job that doesn't feel like one." },
+];
+
+export type PhotoSeries = "Misc" | "Colombia" | "Spider" | "Peru";
+
+export type Photo = {
+  src: string;
+  alt: string;
+  series: PhotoSeries;
+  title?: string;
+  caption?: string;
+  story?: string;
+  featured?: boolean;
+};
+
+export const photos: Photo[] = [
+  { src: "/photos/misc-dsc04006.png", alt: "Misc photo 01", series: "Misc", title: "Still frame", featured: true },
+  { src: "/photos/colombia-messcam-4794.png", alt: "Colombia photo 01", series: "Colombia" },
+  {
+    src: "/photos/spider-img-6545.png",
+    alt: "A momma wolf spider photographed up close",
+    series: "Spider",
+    title: "Momma Wolfy",
+    story: "A momma wolf spider I saw and just _had_ to photograph. This shoot required a focus merge to be able to get so close and still have the entire spider in focus. It was probably the most difficult photoshoot I have done to date. Shot on my iPhone 13 Pro Max.",
+  },
+  {
+    src: "/photos/misc-nicole.png",
+    alt: "Nicole flexing her biceps at Kure Beach",
+    series: "Misc",
+    title: "Nicole",
+    caption: "Ocean light",
+    story: "My friend Nicole flexing her biceps at Kure Beach.",
+  },
+  { src: "/photos/misc-img-1808.png", alt: "Misc photo 02", series: "Misc" },
+  {
+    src: "/photos/peru-img-1130.png",
+    alt: "Justin and Keiryan before leaving an Airbnb in Cusco, Peru",
+    series: "Peru",
+    title: "Twinergy",
+    story: "Justin (one of my close friends) and I just before we left our 2nd Airbnb in Cusco, Peru.",
+    featured: true,
+  },
+  { src: "/photos/misc-dsc07075.png", alt: "Portrait of a man wearing sunglasses near a bridge", series: "Misc", title: "In motion" },
+  { src: "/photos/spider-img-6569.png", alt: "Spider photo 02", series: "Spider" },
+  { src: "/photos/misc-img-1823.png", alt: "Misc photo 03", series: "Misc" },
+  { src: "/photos/colombia-messcam-4797.png", alt: "Colombia photo 02", series: "Colombia" },
+  { src: "/photos/misc-img-9755.png", alt: "Misc photo 04", series: "Misc" },
+  {
+    src: "/photos/misc-img-9751.png",
+    alt: "Plane cutting through heavy clouds",
+    series: "Misc",
+    title: "Through the clouds",
+    story: "Shot on iPhone 15 Pro Max.",
+  },
+  {
+    src: "/photos/misc-img-0312.png",
+    alt: "Portrait of Keiryan smiling outdoors with a backpack",
+    series: "Misc",
+    title: "Somewhere green",
+    story: "Standing in Miami with Justin just before boarding our flights to Peru.",
+  },
+  { src: "/photos/spider-img-6582.png", alt: "Spider photo 03", series: "Spider" },
+  {
+    src: "/photos/peru-img-0133.png",
+    alt: "Sunset over the beach in Peru",
+    series: "Peru",
+    title: "Sunset at La Playa",
+    story: "A gorgeous burn of a sunset at the beach in Peru.",
+  },
+  { src: "/photos/misc-dsc07909.png", alt: "Misc photo 05", series: "Misc" },
+  { src: "/photos/spider-img-6621.png", alt: "Spider photo 04", series: "Spider" },
+  {
+    src: "/photos/misc-ben-2.png",
+    alt: "A campfire with friends in Georgia",
+    series: "Misc",
+    title: "A fire with friends",
+    story: "A scene from a campfire with friends in Georgia.",
+  },
+  {
+    src: "/photos/misc-img-9612.png",
+    alt: "Night street scene outside a storefront in Los Angeles",
+    series: "Misc",
+    title: "A night in LA",
+    story: "LA is often painted as very glamorous in Hollywood. I guess that’s because it is Hollywood. The reality off-screen is very different, however, and a night spent walking through LA will quickly teach you that.",
+  },
+  { src: "/photos/misc-img-4418.png", alt: "Misc photo 07", series: "Misc" },
+  { src: "/photos/misc-img-0226.png", alt: "Misc photo 08", series: "Misc" },
 ];
 
 export type WorkRole = {

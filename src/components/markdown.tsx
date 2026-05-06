@@ -1,13 +1,21 @@
 // Lightweight markdown-ish renderer. Sufficient for short posts.
-// Handles: ## h2, ### h3, > blockquote, lists (- ...), paragraphs, --- hr, `code`.
+// Handles: ## h2, ### h3, > blockquote, lists (- ...), paragraphs, --- hr, `code`, _emphasis_.
 import { Fragment } from "react";
 
 function renderInline(text: string) {
-  // inline code only
-  const parts = text.split(/(`[^`]+`)/g);
-  return parts.map((p, i) =>
-    p.startsWith("`") && p.endsWith("`") ? <code key={i}>{p.slice(1, -1)}</code> : <Fragment key={i}>{p}</Fragment>
-  );
+  const parts = text.split(/(`[^`]+`|_[^_]+_)/g);
+
+  return parts.map((p, i) => {
+    if (p.startsWith("`") && p.endsWith("`")) {
+      return <code key={i}>{p.slice(1, -1)}</code>;
+    }
+
+    if (p.startsWith("_") && p.endsWith("_")) {
+      return <em key={i}>{p.slice(1, -1)}</em>;
+    }
+
+    return <Fragment key={i}>{p}</Fragment>;
+  });
 }
 
 export function Markdown({ source }: { source: string }) {

@@ -12,22 +12,36 @@ const Index = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="accent-blob" />
+      <section className="relative overflow-hidden border-b border-border/60">
         <div className="grain" />
-        <div className="container-wide relative z-10 pt-20 pb-28 md:pt-32 md:pb-40">
-          <p className="section-label mb-6">📍 {siteConfig.location} · Currently open to select opportunities</p>
-          <h1 className="max-w-3xl font-display text-5xl font-bold leading-[1.05] md:text-7xl">
-            Hey, I'm Keiryan.
-          </h1>
-          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-            I build the infrastructure that makes AI teams move fast. I also write about technology,
-            share what I'm learning, and document the parts of life worth remembering.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm">
-            <Link to="/writing" className="link-underline text-foreground">→ Read my writing</Link>
-            <Link to="/work" className="link-underline text-foreground">→ See my work</Link>
-            <Link to="/contact" className="link-underline text-foreground">→ Get in touch</Link>
+        <div className="container-wide relative z-10 grid items-center gap-14 pt-16 pb-20 md:grid-cols-[minmax(0,1.35fr)_minmax(320px,0.65fr)] md:pt-24 md:pb-28">
+          <div>
+            <p className="section-label mb-6">📍 {siteConfig.location} · Doing ops and training bots</p>
+            <h1 className="max-w-3xl font-display text-5xl font-bold leading-[1.05] md:text-7xl">
+              Hey, I'm Keiryan.
+            </h1>
+            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+              I build the infrastructure that makes AI teams move fast. I also write about technology,
+              share what I'm learning, and document the parts of life worth remembering.
+            </p>
+            <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+              <Link to="/writing" className="link-underline text-foreground">→ Read my writing</Link>
+              <Link to="/work" className="link-underline text-foreground">→ See my work</Link>
+              <Link to="/contact" className="link-underline text-foreground">→ Get in touch</Link>
+            </div>
+          </div>
+
+          <div className="relative mx-auto w-full max-w-sm md:mx-0 md:justify-self-end">
+            <div className="absolute -left-4 top-6 hidden w-28 rotate-[-6deg] border border-border bg-card px-4 py-3 shadow-sm md:block">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">currently</p>
+              <p className="mt-1 font-display text-lg leading-tight">writing things down</p>
+            </div>
+            <PolaroidPlaceholder tilt={2} label="somewhere in the middle" />
+            <div className="mt-6 grid gap-2 font-mono text-xs text-muted-foreground">
+              <span className="border-l border-primary/60 pl-3">Building AI ops systems</span>
+              <span className="border-l border-primary/60 pl-3">Tenacious learner</span>
+              <span className="border-l border-primary/60 pl-3">Usually building something</span>
+            </div>
           </div>
         </div>
       </section>
@@ -93,10 +107,10 @@ const Index = () => {
         <Reveal>
           <h2 className="section-label mb-8">Currently into</h2>
         </Reveal>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {hobbies.map((h, i) => (
             <Reveal key={h.label} delay={i * 0.05}>
-              <div className="rounded-lg border border-border bg-card/40 p-6 transition-all hover:-translate-y-0.5 hover:bg-card">
+              <div className="flex h-full flex-col rounded-lg border border-border bg-card/40 p-6 transition-all hover:-translate-y-0.5 hover:bg-card">
                 <div className="text-3xl">{h.emoji}</div>
                 <h3 className="mt-3 font-display text-xl font-semibold">{h.label}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{h.note}</p>

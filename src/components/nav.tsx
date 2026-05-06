@@ -63,6 +63,8 @@ export function Nav() {
           <a
             href={siteConfig.social.github}
             aria-label="GitHub"
+            target="_blank"
+            rel="noreferrer"
             className="hidden h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:inline-flex"
           >
             <Github className="h-4 w-4" />
@@ -70,6 +72,8 @@ export function Nav() {
           <a
             href={siteConfig.social.linkedin}
             aria-label="LinkedIn"
+            target="_blank"
+            rel="noreferrer"
             className="hidden h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:inline-flex"
           >
             <Linkedin className="h-4 w-4" />

@@ -22,10 +22,22 @@ export function Footer() {
             <a href={`mailto:${siteConfig.email}`} aria-label="Email" className="hover:text-foreground">
               <Mail className="h-4 w-4" />
             </a>
-            <a href={siteConfig.social.github} aria-label="GitHub" className="hover:text-foreground">
+            <a
+              href={siteConfig.social.github}
+              aria-label="GitHub"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-foreground"
+            >
               <Github className="h-4 w-4" />
             </a>
-            <a href={siteConfig.social.linkedin} aria-label="LinkedIn" className="hover:text-foreground">
+            <a
+              href={siteConfig.social.linkedin}
+              aria-label="LinkedIn"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-foreground"
+            >
               <Linkedin className="h-4 w-4" />
             </a>
           </div>

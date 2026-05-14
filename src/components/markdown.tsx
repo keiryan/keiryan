@@ -1,5 +1,5 @@
 // Lightweight markdown-ish renderer. Sufficient for short posts.
-// Handles: ## h2, ### h3, > blockquote, lists (- ...), paragraphs, --- hr, `code`, _emphasis_.
+// Handles: ## h2, ### h3, > blockquote, images, lists (- ...), paragraphs, --- hr, `code`, _emphasis_.
 import { Fragment } from "react";
 
 function renderInline(text: string) {
@@ -39,6 +39,21 @@ export function Markdown({ source }: { source: string }) {
     }
     if (line.trim() === "---") {
       out.push(<hr key={key++} />);
+      i++; continue;
+    }
+    if (line.startsWith("![")) {
+      const match = line.match(/^!\[(.*)]\((.*)\)$/);
+      if (match) {
+        out.push(
+          <figure key={key++} className="my-10">
+            <img
+              src={match[2]}
+              alt={match[1]}
+              className="aspect-[4/3] w-full rounded-lg border border-border object-cover shadow-sm"
+            />
+          </figure>
+        );
+      }
       i++; continue;
     }
     if (line.startsWith("> ")) {

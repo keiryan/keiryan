@@ -34,6 +34,16 @@ const Post = () => {
           <p className="mt-4 text-lg italic text-muted-foreground">by Keiryan Wilson</p>
         </header>
 
+        {post.image && (
+          <figure className="container-wide mt-12">
+            <img
+              src={post.image.src}
+              alt={post.image.alt}
+              className="aspect-[4/3] w-full rounded-lg border border-border object-cover shadow-sm"
+            />
+          </figure>
+        )}
+
         <div className="container-prose mt-12">
           <Markdown source={post.content} />
         </div>

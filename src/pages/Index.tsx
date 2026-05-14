@@ -96,7 +96,12 @@ const Index = () => {
           </Reveal>
           <Reveal delay={0.1}>
             <div className="flex justify-center md:justify-end">
-              <PolaroidPlaceholder tilt={-2} />
+              <PolaroidPlaceholder
+                tilt={-2}
+                src="/about/keiryan-cusco.jpg"
+                alt="Keiryan wearing a woven hat in a stone alley."
+                label="somewhere in Cusco"
+              />
             </div>
           </Reveal>
         </div>

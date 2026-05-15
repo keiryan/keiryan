@@ -41,6 +41,11 @@ const Post = () => {
               alt={post.image.alt}
               className="aspect-[4/3] w-full rounded-lg border border-border object-cover shadow-sm"
             />
+            {post.image.caption && (
+              <figcaption className="mt-3 text-center font-mono text-xs leading-relaxed text-muted-foreground">
+                {post.image.caption}
+              </figcaption>
+            )}
           </figure>
         )}
 

@@ -239,6 +239,7 @@ export type Post = {
   image?: {
     src: string;
     alt: string;
+    caption?: string;
   };
   content: string; // markdown-lite
 };
@@ -285,12 +286,13 @@ Because the people doing this work usually aren't the ones telling the story. An
     image: {
       src: "/writing/cusco-window-headline.jpg",
       alt: "Keiryan standing in front of a wide window overlooking Cusco.",
+      caption: "Standing in an Airbnb in Cusco, Peru, getting ready for the morning.",
     },
     content: `I have been a builder for as long as I can remember.
 
 Long before I knew what code, systems, interfaces, or the internet were, I had Legos. My fascination with building things probably started with my first Lego set, which, if I remember correctly, was a firetruck.
 
-![A young Keiryan holding a Lego fire truck build.](/writing/lego-fire-truck.jpg)
+![A young Keiryan holding a Lego fire truck build.](/writing/lego-fire-truck.jpg "Little me with my first Lego set. A firetruck.")
 
 At first, I loved following the instructions. There was something satisfying about opening the manual, finding the right pieces, and turning that chaotic pile of plastic bricks into the thing on the box. But the part I loved most came after that.
 
@@ -320,7 +322,7 @@ So I started learning.
 
 When I was homeschooled for part of middle school, I was supposed to be focused on my regular schoolwork. Instead, I kept finding myself sneaking away to learn Python. Grok Academy was the website that first exposed me. I became obsessed with the idea that I could write in a language computers understood. That I could type something, run it, break it, fix it, and slowly make the machine do what I wanted.
 
-![A Grok Academy Python lesson showing a passed beginner programming exercise.](/writing/grok-academy-python.png)
+![A Grok Academy Python lesson showing a passed beginner programming exercise.](/writing/grok-academy-python.png "One of the Grok Academy Python lessons where I learned the basics.")
 
 At the time, I was absolutely not supposed to have much computer access. My parents were careful about how much time we spent on computers, which, honestly, was probably fair. The internet is a scary place for kids!
 

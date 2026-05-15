@@ -27,14 +27,14 @@ const Photos = () => {
               <button
                 type="button"
                 onClick={() => setSelectedPhoto(photo)}
-                className="group relative mb-4 block w-full break-inside-avoid overflow-hidden rounded-lg border border-border bg-card/60 text-left shadow-sm outline-none transition-transform hover:scale-[1.015] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="group relative mb-4 block w-full break-inside-avoid overflow-hidden rounded-lg border border-border bg-card/60 text-left shadow-sm outline-none transition-[border-color,box-shadow] duration-200 hover:border-primary/40 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 aria-label={`Open ${photo.title ?? photo.alt}`}
               >
                 <img
                   src={photo.src}
                   alt={photo.alt}
                   loading={photo.featured ? "eager" : "lazy"}
-                  className="h-auto w-full object-cover"
+                  className="block h-auto w-full object-cover transition-opacity duration-200 group-hover:opacity-95"
                 />
                 <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-3 p-3 opacity-80 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
                   <span className="rounded-full border border-white/20 bg-black/70 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-white shadow-sm backdrop-blur-md">

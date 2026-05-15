@@ -49,7 +49,7 @@ export function Markdown({ source }: { source: string }) {
             <img
               src={match[2]}
               alt={match[1]}
-              className="aspect-[4/3] w-full rounded-lg border border-border object-cover shadow-sm"
+              className="w-full rounded-lg border border-border shadow-sm"
             />
           </figure>
         );

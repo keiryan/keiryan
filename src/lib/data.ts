@@ -320,6 +320,8 @@ So I started learning.
 
 When I was homeschooled for part of middle school, I was supposed to be focused on my regular schoolwork. Instead, I kept finding myself sneaking away to learn Python. Grok Academy was the website that first exposed me. I became obsessed with the idea that I could write in a language computers understood. That I could type something, run it, break it, fix it, and slowly make the machine do what I wanted.
 
+![A Grok Academy Python lesson showing a passed beginner programming exercise.](/writing/grok-academy-python.png)
+
 At the time, I was absolutely not supposed to have much computer access. My parents were careful about how much time we spent on computers, which, honestly, was probably fair. The internet is a scary place for kids!
 
 But I found an old laptop in the garage. Thick. The thing must have been like 5 pounds. As far as computers go, it's fair to say this thing was prehistoric. Battery life was about an hour.

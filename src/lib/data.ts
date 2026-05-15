@@ -332,9 +332,9 @@ I installed a Python IDE on a thumb drive, snuck the laptop out of my closet, an
 
 The first real thing I remember building was a terminal game based on a doll family my sister and I had invented. I wanted it to feel like some kind of hacker game. The code was terrible. Truly tragic. It was literally a pile of switch statements, broken logic, and oddly named variables.
 
-But it worked enough to make me feel something.
+But it worked enough to make me feel like I'd truly created something.
 
-That was the first time I remember feeling like code could be a creative material. Not just technical or mathematical. Creative.
+That was the first time I remember feeling like code could be a building block. (just like my legos from long before) Not just technical or mathematical.
 
 It taught me how to debug. How to research. How to read documentation. How to get stuck, stay with it, and eventually find a way through.
 

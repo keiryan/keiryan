@@ -5,11 +5,11 @@ export const siteConfig = {
   description:
     "Technical operator, AI ops leader, and writer. Building things, writing things, living somewhere in between.",
   email: "keiryanwilson@gmail.com",
-  phone: "(404) 360-3613",
   location: "Leland, NC",
   social: {
     github: "https://github.com/keiryan",
     linkedin: "https://www.linkedin.com/in/keiryan/",
+    instagram: "https://www.instagram.com/keiryans",
   },
 };
 

@@ -1,6 +1,6 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
+import { Github, Instagram, Linkedin, Mail, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { navLinks, siteConfig } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -77,6 +77,15 @@ export function Nav() {
             className="hidden h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:inline-flex"
           >
             <Linkedin className="h-4 w-4" />
+          </a>
+          <a
+            href={siteConfig.social.instagram}
+            aria-label="Instagram"
+            target="_blank"
+            rel="noreferrer"
+            className="hidden h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:inline-flex"
+          >
+            <Instagram className="h-4 w-4" />
           </a>
           <a
             href={`mailto:${siteConfig.email}`}

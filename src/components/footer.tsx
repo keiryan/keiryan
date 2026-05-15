@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { navLinks, siteConfig } from "@/lib/data";
 
 export function Footer() {
@@ -39,6 +39,15 @@ export function Footer() {
               className="hover:text-foreground"
             >
               <Linkedin className="h-4 w-4" />
+            </a>
+            <a
+              href={siteConfig.social.instagram}
+              aria-label="Instagram"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-foreground"
+            >
+              <Instagram className="h-4 w-4" />
             </a>
           </div>
         </div>

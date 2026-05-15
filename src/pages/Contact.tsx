@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, MapPin, Phone } from "lucide-react";
+import { Github, Instagram, Linkedin, Mail, MapPin } from "lucide-react";
 import { Layout } from "@/components/layout";
 import { siteConfig } from "@/lib/data";
 
@@ -21,18 +21,6 @@ const Contact = () => {
               <div>
                 <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Email</p>
                 <p className="font-display text-lg font-semibold">{siteConfig.email}</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a
-              href={`tel:${siteConfig.phone}`}
-              className="group flex items-center gap-4 rounded-lg border border-border bg-card/40 p-5 transition-all hover:-translate-y-0.5 hover:bg-card"
-            >
-              <Phone className="h-5 w-5 text-primary" />
-              <div>
-                <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Phone</p>
-                <p className="font-display text-lg font-semibold">{siteConfig.phone}</p>
               </div>
             </a>
           </li>
@@ -63,6 +51,15 @@ const Contact = () => {
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border hover:bg-muted"
           >
             <Linkedin className="h-4 w-4" />
+          </a>
+          <a
+            href={siteConfig.social.instagram}
+            aria-label="Instagram"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border hover:bg-muted"
+          >
+            <Instagram className="h-4 w-4" />
           </a>
         </div>
       </section>

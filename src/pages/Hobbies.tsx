@@ -16,9 +16,7 @@ const Hobbies = () => {
             <div className="text-6xl">🎮</div>
             <h2 className="mt-4 font-display text-3xl font-semibold">PC Gaming</h2>
             <p className="prose-article">
-              FPS games are my home base — the kind of focus that crowds out everything else for an
-              hour at a time. I keep one eye on hardware longer than I keep one eye on any single
-              title. There's always a tweak to chase, a frame to find, a setting to dial in.
+              FPS games are my home base. Ashamed to say I have 3500 hours in Fortnite and about 1k in Overwatch.
             </p>
 
             <div className="mt-6 rounded-lg border border-border bg-card p-5 font-mono text-sm">

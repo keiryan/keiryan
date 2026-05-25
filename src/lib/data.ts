@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Keiryan Wilson",
   shortName: "KW",
-  tagline: "Building things. Writing things. Living somewhere in between.",
+  tagline: "Always building. 🔨",
   description:
     "Technical operator, AI ops leader, and writer. Building things, writing things, living somewhere in between.",
   email: "keiryanwilson@gmail.com",

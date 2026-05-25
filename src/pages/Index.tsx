@@ -59,7 +59,7 @@ const Index = () => {
             <Reveal key={p.slug} delay={i * 0.05}>
               <Link
                 to={`/writing/${p.slug}`}
-                className="group block rounded-lg border border-border bg-card/40 p-6 transition-all hover:-translate-y-0.5 hover:border-l-2 hover:border-l-primary hover:bg-card hover:shadow-lg"
+                className="article-card-hover group block rounded-lg border border-border bg-card/40 p-6"
               >
                 <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-muted-foreground">
                   <time>{formatDate(p.date)}</time>

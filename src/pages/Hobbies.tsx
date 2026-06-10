@@ -1,4 +1,5 @@
 import { type FormEvent, useState } from "react";
+import { Link } from "react-router-dom";
 import { AlertCircle, Check, ExternalLink, Headphones, Loader2, Music2, Send, Youtube } from "lucide-react";
 
 import { Layout } from "@/components/layout";
@@ -80,7 +81,7 @@ const Hobbies = () => {
   };
 
   return (
-    <Layout>
+    <Layout title="Hobbies">
       <section className="container-prose py-20">
         <h1 className="font-display text-5xl font-bold">Hobbies</h1>
         <p className="mt-4 text-lg text-muted-foreground">
@@ -90,18 +91,19 @@ const Hobbies = () => {
         {/* Gaming */}
         <Reveal>
           <section className="mt-20">
-            <div className="text-6xl">🎮</div>
-            <h2 className="mt-4 font-display text-3xl font-semibold">PC Gaming</h2>
+            <h2 className="font-display text-3xl font-semibold">PC Gaming</h2>
             <p className="prose-article">
-              FPS games are my home base. Ashamed to say I have 3500 hours in Fortnite and about 1k in Overwatch.
+              FPS games are my home base. Ashamed to say I have 3,500 hours in Fortnite and about
+              1k in Overwatch.
             </p>
 
             <div className="mt-6 rounded-lg border border-border bg-card p-5 font-mono text-sm">
-              <p className="text-muted-foreground">// stat block</p>
+              <p className="text-muted-foreground">// the rig</p>
               <ul className="mt-2 space-y-1">
-                <li>Currently playing: rotation of FPS + a long sim project</li>
-                <li>Main rig: custom build, in-progress as always</li>
-                <li>Target: 240fps and a fan curve I don't have to think about</li>
+                <li>CPU: Intel i7-8700 · GPU: RTX 2080</li>
+                <li>RAM: 32GB · Storage: 1TB</li>
+                <li>Currently playing: Fortnite, Overwatch</li>
+                <li>Status: "done" (fourth time)</li>
               </ul>
             </div>
           </section>
@@ -110,19 +112,39 @@ const Hobbies = () => {
         {/* Hardware */}
         <Reveal>
           <section className="mt-24 border-l-2 border-primary pl-6">
-            <h2 className="font-display text-3xl font-semibold">🛠️ Hardware & Building</h2>
+            <h2 className="font-display text-3xl font-semibold">Hardware & Building</h2>
             <p className="prose-article">
-              I'm on something like my fourth "final" build. Every iteration teaches me a little
-              more about decision-making under constraint. Hardware is just a hobby with an unusually
-              honest feedback loop.
+              The rig above is a 2018-class machine, and I re-litigate replacing it about once a
+              year. So far the honest answer keeps coming back: it still hits the frames I need in
+              the games I actually play.{" "}
+              <Link to="/writing/hardware-obsession" className="text-primary underline-offset-4 hover:underline">
+                I wrote about why I keep losing that argument with myself
+              </Link>
+              .
+            </p>
+          </section>
+        </Reveal>
+
+        {/* Photography */}
+        <Reveal>
+          <section className="mt-24">
+            <h2 className="font-display text-3xl font-semibold">Photography</h2>
+            <p className="prose-article">
+              Mostly travel shots from Peru, Colombia, and whatever city I'm walking through, plus
+              macro shots of whatever's living in the yard. The hardest shoot I've done was{" "}
+              <Link to="/photos" className="text-primary underline-offset-4 hover:underline">
+                a momma wolf spider
+              </Link>{" "}
+              that required focus-merging to keep her whole body sharp at point-blank range. Shot
+              on an iPhone, like almost everything I make.
             </p>
           </section>
         </Reveal>
 
         {/* Writing */}
         <Reveal>
-          <section className="mt-24">
-            <h2 className="font-display text-3xl font-semibold">✍️ Writing & Reading</h2>
+          <section className="mt-24 border-l-2 border-primary pl-6">
+            <h2 className="font-display text-3xl font-semibold">Writing & Reading</h2>
             <p className="prose-article">
               I started writing because thinking out loud in my head wasn't catching the lazy parts
               of my own ideas. Writing does. Right now I'm reading more long-form and less
@@ -134,11 +156,11 @@ const Hobbies = () => {
         {/* Music */}
         <Reveal>
           <section className="mt-24">
-            <div className="text-6xl">🎧</div>
-            <h2 className="mt-4 font-display text-3xl font-semibold">Music</h2>
+            <h2 className="font-display text-3xl font-semibold">Music</h2>
             <p className="prose-article">
-              Always something playing. Genre is a mood — a focus playlist for ops days, something
-              loud for builds, something patient for evenings. A rotation, never a routine.
+              Always something playing. Genre is a mood: a focus playlist for ops days, something
+              loud for builds, something patient for evenings. The best additions lately have come
+              from other people, which is what the form below is for.
             </p>
 
             <div className="mt-8 overflow-hidden rounded-lg border border-border bg-card/55">

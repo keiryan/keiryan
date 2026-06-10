@@ -14,7 +14,7 @@ const Photos = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
   return (
-    <Layout>
+    <Layout title="Photos">
       <section className="container-wide py-20">
         <h1 className="font-display text-5xl font-bold">Photos</h1>
         <p className="mt-4 max-w-prose text-lg text-muted-foreground">

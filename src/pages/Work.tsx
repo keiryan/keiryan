@@ -6,13 +6,13 @@ import { skills, workHistory } from "@/lib/data";
 
 const Work = () => {
   return (
-    <Layout>
+    <Layout title="Work">
       <section className="container-wide py-20">
         <h1 className="font-display text-5xl font-bold">Work</h1>
         <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
-          Strategic technical leader with a strong foundation in front-end engineering and AI
-          operations. Proven track record scaling teams, owning delivery pipelines, and aligning
-          engineering and research functions in fast-moving environments.
+          I've led AI operations at two AI-training companies and shipped front-end for Fortune
+          500 clients before that. I'm best at the zero-to-one phase: new team, no systems,
+          figure it out, then build the infrastructure so nobody has to figure it out twice.
         </p>
 
         <div className="mt-8">
@@ -39,22 +39,19 @@ const Work = () => {
                       <h3 className="font-display text-2xl font-semibold">
                         {role.company}
                         <span className="ml-2 font-sans text-base font-medium text-muted-foreground">
-                          — {role.title}
+                          – {role.title}
                           {role.type ? ` (${role.type})` : ""}
                         </span>
                       </h3>
                       <p className="font-mono text-xs text-muted-foreground">
-                        {role.start} — {role.end} · {role.location}
+                        {role.start} – {role.end} · {role.location}
                       </p>
                     </div>
                     <ul className="mt-5 space-y-3 text-sm leading-relaxed">
                       {role.bullets.map((b, i) => (
                         <li key={i} className="flex gap-3">
                           <span className="mt-2 h-1 w-1 flex-none rounded-full bg-primary" />
-                          <span>
-                            <strong className="font-semibold">{b.label}:</strong>{" "}
-                            <span className="text-muted-foreground">{b.text}</span>
-                          </span>
+                          <span className="text-muted-foreground">{b.text}</span>
                         </li>
                       ))}
                     </ul>
@@ -87,9 +84,10 @@ const Work = () => {
 
         {/* Contact CTA */}
         <div className="mt-20 rounded-lg border border-border bg-card/40 p-10 text-center">
-          <h3 className="font-display text-2xl font-semibold">Looking for someone like this?</h3>
+          <h3 className="font-display text-2xl font-semibold">Sound useful?</h3>
           <p className="mt-2 text-muted-foreground">
-            I'm currently open to select opportunities.
+            I'm open to select opportunities. The fastest way to find out if yours is one of them
+            is to ask.
           </p>
           <Link
             to="/contact"

@@ -14,7 +14,7 @@ const Post = () => {
   const related = posts.filter((p) => p.slug !== post.slug).slice(0, 2);
 
   return (
-    <Layout>
+    <Layout title={post.title}>
       <article className="py-16">
         <header className="container-prose">
           <Link to="/writing" className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-foreground">

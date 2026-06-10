@@ -1,14 +1,21 @@
-import { type ReactNode } from "react";
-import { motion } from "framer-motion";
+import { type ReactNode, useEffect } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Nav } from "./nav";
 import { Footer } from "./footer";
+import { siteConfig } from "@/lib/data";
 
-export function Layout({ children }: { children: ReactNode }) {
+export function Layout({ children, title }: { children: ReactNode; title?: string }) {
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    document.title = title ? `${title} · ${siteConfig.name}` : siteConfig.name;
+  }, [title]);
+
   return (
     <div className="flex min-h-screen flex-col">
       <Nav />
       <motion.main
-        initial={{ opacity: 0, y: 8 }}
+        initial={reduceMotion ? false : { opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
         className="flex-1"

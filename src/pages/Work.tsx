@@ -34,7 +34,7 @@ const Work = () => {
               <Reveal key={idx} delay={idx * 0.03}>
                 <li className="relative pl-10 md:pl-14">
                   <span className="absolute left-2 top-2 h-3 w-3 rounded-full border-2 border-background bg-primary md:left-3" />
-                  <div className="rounded-lg border border-border bg-card/50 p-6 transition-colors hover:bg-card">
+                  <div className="rounded-lg border border-border bg-card/50 p-6">
                     <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                       <h3 className="font-display text-2xl font-semibold">
                         {role.company}

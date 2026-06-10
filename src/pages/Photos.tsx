@@ -27,24 +27,22 @@ const Photos = () => {
               <button
                 type="button"
                 onClick={() => setSelectedPhoto(photo)}
-                className="group relative mb-4 block w-full break-inside-avoid overflow-hidden rounded-lg border border-border bg-card/60 text-left shadow-sm outline-none transition-[border-color,box-shadow] duration-200 hover:border-primary/40 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="group relative mb-4 block w-full break-inside-avoid overflow-hidden rounded-lg border border-border bg-card/60 text-left shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 aria-label={`Open ${photo.title ?? photo.alt}`}
               >
                 <img
                   src={photo.src}
                   alt={photo.alt}
                   loading={photo.featured ? "eager" : "lazy"}
-                  className="block h-auto w-full object-cover transition-opacity duration-200 group-hover:opacity-95"
+                  className="block h-auto w-full object-cover transition-[filter] duration-300 group-hover:brightness-[0.82] group-focus-visible:brightness-[0.82]"
                 />
-                <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-3 p-3 opacity-80 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-                  <span className="rounded-full border border-white/20 bg-black/70 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-white shadow-sm backdrop-blur-md">
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent p-4 pt-12 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                  <p className="font-display text-lg font-semibold leading-tight text-white">
+                    {photo.title ?? photo.caption ?? photo.series}
+                  </p>
+                  <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-white/70">
                     {photo.series}
-                  </span>
-                  {photo.caption ? (
-                    <span className="max-w-[65%] rounded-full border border-white/20 bg-black/70 px-2 py-1 text-right font-mono text-[10px] text-white shadow-sm backdrop-blur-md">
-                      {photo.caption}
-                    </span>
-                  ) : null}
+                  </p>
                 </div>
               </button>
             </Reveal>
@@ -56,11 +54,17 @@ const Photos = () => {
         <DialogContent className="max-h-[92vh] w-[calc(100vw-2rem)] max-w-6xl overflow-hidden p-0">
           {selectedPhoto ? (
             <div className="grid max-h-[92vh] overflow-hidden lg:grid-cols-[minmax(0,1.6fr)_minmax(320px,0.7fr)]">
-              <div className="flex min-h-0 items-center justify-center bg-black">
+              <div className="relative flex min-h-0 items-center justify-center overflow-hidden bg-black">
+                <img
+                  src={selectedPhoto.src}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-2xl saturate-150"
+                />
                 <img
                   src={selectedPhoto.src}
                   alt={selectedPhoto.alt}
-                  className="max-h-[58vh] w-full object-contain lg:max-h-[92vh]"
+                  className="relative max-h-[58vh] w-full object-contain lg:max-h-[92vh]"
                 />
               </div>
               <div className="min-h-0 overflow-y-auto p-6 md:p-8">

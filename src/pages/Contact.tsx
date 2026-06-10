@@ -15,7 +15,7 @@ const Contact = () => {
           <li>
             <a
               href={`mailto:${siteConfig.email}`}
-              className="group flex items-center gap-4 rounded-lg border border-border bg-card/40 p-5 transition-all hover:-translate-y-0.5 hover:bg-card"
+              className="group flex items-center gap-4 rounded-lg border border-border bg-card/40 p-5 transition-colors hover:bg-card"
             >
               <Mail className="h-5 w-5 text-primary" />
               <div>

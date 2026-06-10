@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/data";
 
 const Contact = () => {
   return (
-    <Layout>
+    <Layout title="Contact">
       <section className="container-prose py-24">
         <h1 className="font-display text-5xl font-bold md:text-6xl">Say hello.</h1>
         <p className="mt-6 text-lg text-muted-foreground">

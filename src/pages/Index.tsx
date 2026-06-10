@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout";
 import { Reveal } from "@/components/reveal";
 import { PolaroidPlaceholder } from "@/components/polaroid";
-import { hobbies, posts, siteConfig } from "@/lib/data";
+import { currently, posts, siteConfig } from "@/lib/data";
 import { formatDate, readingTime } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 
@@ -21,8 +21,9 @@ const Index = () => {
               Hey, I'm Keiryan.
             </h1>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-              I build the infrastructure that makes AI teams move fast. I also write about technology,
-              share what I'm learning, and document the parts of life worth remembering.
+              I build the unglamorous side of AI companies — onboarding, identity, tooling, the
+              machinery that decides whether everyone else gets to move fast. Before that I wrote
+              front-end code, and before that I sold iPhones. This is where I write it all down.
             </p>
             <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm">
               <Link to="/writing" className="link-underline text-foreground">→ Read my writing</Link>
@@ -36,11 +37,11 @@ const Index = () => {
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">currently</p>
               <p className="mt-1 font-display text-lg leading-tight">writing things down</p>
             </div>
-            <PolaroidPlaceholder tilt={2} label="somewhere in the middle" />
+            <PolaroidPlaceholder tilt={2} label="home office, Leland" />
             <div className="mt-6 grid gap-2 font-mono text-xs text-muted-foreground">
-              <span className="border-l border-primary/60 pl-3">Building AI ops systems</span>
-              <span className="border-l border-primary/60 pl-3">Tenacious learner</span>
-              <span className="border-l border-primary/60 pl-3">Usually building something</span>
+              <span className="border-l border-primary/60 pl-3">Scaled an AI ops org from 0 to 200 people</span>
+              <span className="border-l border-primary/60 pl-3">3,500 hours in Fortnite, zero regrets</span>
+              <span className="border-l border-primary/60 pl-3">Four "final" PC builds and counting</span>
             </div>
           </div>
         </div>
@@ -54,25 +55,21 @@ const Index = () => {
             <Link to="/writing" className="link-underline text-sm">→ All writing</Link>
           </div>
         </Reveal>
-        <div className="grid gap-4">
+        <div className="divide-y divide-border border-y border-border">
           {recent.map((p, i) => (
             <Reveal key={p.slug} delay={i * 0.05}>
-              <Link
-                to={`/writing/${p.slug}`}
-                className="article-card-hover group block rounded-lg border border-border bg-card/40 p-6"
-              >
+              <Link to={`/writing/${p.slug}`} className="group block py-7">
                 <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-muted-foreground">
                   <time>{formatDate(p.date)}</time>
                   <span>·</span>
                   <span>{readingTime(p.content)} min read</span>
-                  <span className="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] uppercase tracking-wider">
-                    {p.category}
-                  </span>
+                  <span>·</span>
+                  <span className="uppercase tracking-wider">{p.category}</span>
                 </div>
                 <h3 className="mt-3 font-display text-2xl font-semibold transition-colors group-hover:text-primary">
                   {p.title}
                 </h3>
-                <p className="mt-2 text-muted-foreground">{p.excerpt}</p>
+                <p className="mt-2 max-w-2xl text-muted-foreground">{p.excerpt}</p>
               </Link>
             </Reveal>
           ))}
@@ -107,22 +104,28 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Hobbies */}
+      {/* Currently */}
       <section className="container-wide py-20">
         <Reveal>
-          <h2 className="section-label mb-8">Currently into</h2>
+          <h2 className="section-label mb-8">Currently</h2>
         </Reveal>
-        <div className="grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {hobbies.map((h, i) => (
-            <Reveal key={h.label} delay={i * 0.05}>
-              <div className="flex h-full flex-col rounded-lg border border-border bg-card/40 p-6 transition-all hover:-translate-y-0.5 hover:bg-card">
-                <div className="text-3xl">{h.emoji}</div>
-                <h3 className="mt-3 font-display text-xl font-semibold">{h.label}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{h.note}</p>
-              </div>
+        <dl className="divide-y divide-border border-y border-border">
+          {currently.map((item, i) => (
+            <Reveal key={item.label} delay={i * 0.04}>
+              <Link
+                to={item.to}
+                className="group grid gap-1 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-6"
+              >
+                <dt className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  {item.label}
+                </dt>
+                <dd className="text-lg leading-relaxed transition-colors group-hover:text-primary">
+                  {item.text}
+                </dd>
+              </Link>
             </Reveal>
           ))}
-        </div>
+        </dl>
       </section>
     </Layout>
   );

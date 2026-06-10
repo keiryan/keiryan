@@ -15,7 +15,7 @@ const Writing = () => {
   }, [filter]);
 
   return (
-    <Layout>
+    <Layout title="Writing">
       <section className="container-prose py-20">
         <h1 className="font-display text-5xl font-bold">Writing</h1>
         <p className="mt-4 text-lg text-muted-foreground">

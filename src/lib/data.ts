@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Keiryan Wilson",
   shortName: "KW",
-  tagline: "Always building. 🔨",
+  tagline: "Build the thing. Break it open. See what else it can become.",
   description:
     "Technical operator, AI ops leader, and writer. Building things, writing things, living somewhere in between.",
   email: "keiryanwilson@gmail.com",
@@ -21,12 +21,12 @@ export const navLinks = [
   { href: "/about", label: "About" },
 ];
 
-export const hobbies = [
-  { emoji: "🎮", label: "PC Gaming", note: "FPS games, hardware tuning, and the eternal quest for higher framerates." },
-  { emoji: "🛠️", label: "Building & Tinkering", note: "From code to hardware. If it can be built, it's interesting." },
-  { emoji: "✍️", label: "Writing", note: "Trying to get better at saying things clearly." },
-  { emoji: "🎧", label: "Music", note: "Always have something going. Genre varies wildly." },
-  { emoji: "🤖", label: "AI & Ops", note: "The day job that doesn't feel like one." },
+export const currently = [
+  { label: "Playing", text: "Fortnite (3,500 hours and counting) and Overwatch.", to: "/hobbies" },
+  { label: "Building", text: "This site — and resisting a fifth \"final\" PC build.", to: "/writing/hardware-obsession" },
+  { label: "Shooting", text: "Macro spiders, travel, and the occasional handstand.", to: "/photos" },
+  { label: "Listening", text: "Whatever people send me. There's a form for that.", to: "/hobbies" },
+  { label: "Working on", text: "Wrapping an AI ops contract at G2i. Open to what's next.", to: "/work" },
 ];
 
 export type PhotoSeries = "Misc" | "Colombia" | "Spider" | "Peru";
@@ -42,8 +42,8 @@ export type Photo = {
 };
 
 export const photos: Photo[] = [
-  { src: "/photos/misc-dsc04006.png", alt: "Misc photo 01", series: "Misc", title: "Still frame", featured: true },
-  { src: "/photos/colombia-messcam-4794.png", alt: "Colombia photo 01", series: "Colombia" },
+  { src: "/photos/misc-dsc04006.png", alt: "Ripples on dark water catching low sunlight", series: "Misc", title: "Still frame", featured: true },
+  { src: "/photos/colombia-messcam-4794.png", alt: "A woman with curly hair smiling on a high-rise balcony, mountains hazy behind her", series: "Colombia" },
   {
     src: "/photos/spider-img-6545.png",
     alt: "A momma wolf spider photographed up close",
@@ -59,7 +59,7 @@ export const photos: Photo[] = [
     caption: "Ocean light",
     story: "My friend Nicole flexing her biceps at Kure Beach.",
   },
-  { src: "/photos/misc-img-1808.png", alt: "Misc photo 02", series: "Misc" },
+  { src: "/photos/misc-img-1808.png", alt: "A handstand on parallette bars in a driveway, trees in the background", series: "Misc" },
   {
     src: "/photos/peru-img-1130.png",
     alt: "Justin and Keiryan before leaving an Airbnb in Cusco, Peru",
@@ -69,10 +69,10 @@ export const photos: Photo[] = [
     featured: true,
   },
   { src: "/photos/misc-dsc07075.png", alt: "Portrait of a man wearing sunglasses near a bridge", series: "Misc", title: "In motion" },
-  { src: "/photos/spider-img-6569.png", alt: "Spider photo 02", series: "Spider" },
-  { src: "/photos/misc-img-1823.png", alt: "Misc photo 03", series: "Misc" },
-  { src: "/photos/colombia-messcam-4797.png", alt: "Colombia photo 02", series: "Colombia" },
-  { src: "/photos/misc-img-9755.png", alt: "Misc photo 04", series: "Misc" },
+  { src: "/photos/spider-img-6569.png", alt: "A wolf spider in the grass, her back covered in spiderlings", series: "Spider" },
+  { src: "/photos/misc-img-1823.png", alt: "A handstand on parallettes in the middle of a baseball diamond", series: "Misc" },
+  { src: "/photos/colombia-messcam-4797.png", alt: "A woman in a blue dress dancing on a balcony above a sprawling city skyline", series: "Colombia" },
+  { src: "/photos/misc-img-9755.png", alt: "A jet crossing an overcast sky, contrail trailing behind", series: "Misc" },
   {
     src: "/photos/misc-img-9751.png",
     alt: "Plane cutting through heavy clouds",
@@ -87,7 +87,7 @@ export const photos: Photo[] = [
     title: "Somewhere green",
     story: "Standing in Miami with Justin just before boarding our flights to Peru.",
   },
-  { src: "/photos/spider-img-6582.png", alt: "Spider photo 03", series: "Spider" },
+  { src: "/photos/spider-img-6582.png", alt: "Macro close-up of a wolf spider's face, spiderlings riding on her back", series: "Spider" },
   {
     src: "/photos/peru-img-0133.png",
     alt: "Sunset over the beach in Peru",
@@ -95,8 +95,8 @@ export const photos: Photo[] = [
     title: "Sunset at La Playa",
     story: "A gorgeous burn of a sunset at the beach in Peru.",
   },
-  { src: "/photos/misc-dsc07909.png", alt: "Misc photo 05", series: "Misc" },
-  { src: "/photos/spider-img-6621.png", alt: "Spider photo 04", series: "Spider" },
+  { src: "/photos/misc-dsc07909.png", alt: "Black-and-white street portrait of a man resting on marble steps outside a storefront", series: "Misc" },
+  { src: "/photos/spider-img-6621.png", alt: "A wolf spider facing the camera head-on, eyes in sharp focus", series: "Spider" },
   {
     src: "/photos/misc-ben-2.png",
     alt: "A campfire with friends in Georgia",
@@ -111,8 +111,8 @@ export const photos: Photo[] = [
     title: "A night in LA",
     story: "LA is often painted as very glamorous in Hollywood. I guess that’s because it is Hollywood. The reality off-screen is very different, however, and a night spent walking through LA will quickly teach you that.",
   },
-  { src: "/photos/misc-img-4418.png", alt: "Misc photo 07", series: "Misc" },
-  { src: "/photos/misc-img-0226.png", alt: "Misc photo 08", series: "Misc" },
+  { src: "/photos/misc-img-4418.png", alt: "A smiling man with FPV drone goggles pushed up on his forehead, green field behind him", series: "Misc" },
+  { src: "/photos/misc-img-0226.png", alt: "Golden wild grass catching the afternoon sun", series: "Misc" },
 ];
 
 export type WorkRole = {
@@ -122,7 +122,7 @@ export type WorkRole = {
   start: string;
   end: string;
   location: string;
-  bullets: { label: string; text: string }[];
+  bullets: { text: string }[];
 };
 
 export const workHistory: WorkRole[] = [
@@ -134,13 +134,13 @@ export const workHistory: WorkRole[] = [
     end: "Feb 2026",
     location: "Remote",
     bullets: [
-      { label: "Human Data Pipeline Pilot", text: "Designed and executed an internal human data pipeline pilot that produced actionable operational insights, validating feasibility and directly supporting early client acquisition for simulated-environment AI research." },
-      { label: "Zero-to-One Execution", text: "Built core AI operations from inception through scale, standing up foundational systems and processes to support rapid growth from 0 to 200 contributors." },
-      { label: "AI Operations Enablement", text: "Owned operational execution after client acquisition, setting up the infrastructure, workflows, and tooling required for teams building simulated software environments used in reinforcement learning research." },
-      { label: "Identity & Access Management", text: "Architected secure identity and access infrastructure using Okta, implementing SSO, SAML, and SCIM-based provisioning to enforce one-click onboarding and offboarding across all services." },
-      { label: "Enterprise Tooling & Automations", text: "Researched, selected, deployed, and integrated enterprise SaaS tooling — Slack, Google Workspace, Linear, Cursor, OnePassword — tying systems together through internal automations to reduce manual ops overhead." },
-      { label: "Operational Scaling", text: "Managed day-to-day AI operations spanning account provisioning, access controls, service reliability, vendor negotiations, and enterprise subscription upgrades in a fast-moving research environment." },
-      { label: "Cross-Functional Partnership", text: "Partnered with IT, engineering, and research stakeholders to align AI operations with security, compliance, and human data delivery requirements." },
+      { text: "Designed and executed an internal human data pipeline pilot that produced actionable operational insights, validating feasibility and directly supporting early client acquisition for simulated-environment AI research." },
+      { text: "Built core AI operations from inception through scale, standing up foundational systems and processes to support rapid growth from 0 to 200 contributors." },
+      { text: "Owned operational execution after client acquisition, setting up the infrastructure, workflows, and tooling required for teams building simulated software environments used in reinforcement learning research." },
+      { text: "Architected secure identity and access infrastructure using Okta, implementing SSO, SAML, and SCIM-based provisioning to enforce one-click onboarding and offboarding across all services." },
+      { text: "Researched, selected, deployed, and integrated enterprise SaaS tooling — Slack, Google Workspace, Linear, Cursor, OnePassword — tying systems together through internal automations to reduce manual ops overhead." },
+      { text: "Managed day-to-day AI operations spanning account provisioning, access controls, service reliability, vendor negotiations, and enterprise subscription upgrades in a fast-moving research environment." },
+      { text: "Partnered with IT, engineering, and research stakeholders to align AI operations with security, compliance, and human data delivery requirements." },
     ],
   },
   {
@@ -150,11 +150,11 @@ export const workHistory: WorkRole[] = [
     end: "Apr 2025",
     location: "Remote",
     bullets: [
-      { label: "Largest AI Training Project", text: "Spearheaded sourcing & onboarding of 600+ domain experts in <7 days, enabling client to launch their next-gen AI model on schedule." },
-      { label: "Revenue-Driving Execution", text: "Co-led AI training programs that directly supported $80M+ in ARR, managing delivery pipelines and execution across multiple high-complexity domains." },
-      { label: "Strategic Vendor Leadership", text: "Shaped vendor strategy alongside C-suite and represented the company in evaluations with a trillion-dollar partner — securing a $40M ARR engagement." },
-      { label: "Operational Excellence", text: "Designed human-in-the-loop QA pipelines that increased dataset accuracy from 90% to 98%, reducing retraining cycles by two weeks." },
-      { label: "Exceptional Impact", text: "Achieved 100% NPS — driving repeat engagement and earning client acknowledgment for exceptional operational leadership." },
+      { text: "Spearheaded sourcing & onboarding of 600+ domain experts in <7 days, enabling client to launch their next-gen AI model on schedule." },
+      { text: "Co-led AI training programs that directly supported $80M+ in ARR, managing delivery pipelines and execution across multiple high-complexity domains." },
+      { text: "Shaped vendor strategy alongside C-suite and represented the company in evaluations with a trillion-dollar partner — securing a $40M ARR engagement." },
+      { text: "Designed human-in-the-loop QA pipelines that increased dataset accuracy from 90% to 98%, reducing retraining cycles by two weeks." },
+      { text: "Achieved 100% NPS — driving repeat engagement and earning client acknowledgment for exceptional operational leadership." },
     ],
   },
   {
@@ -165,9 +165,9 @@ export const workHistory: WorkRole[] = [
     end: "Oct 2024",
     location: "Leland, NC",
     bullets: [
-      { label: "High-Volume QA Sprints", text: "Executed 40+ rubric-based LLM evaluation tasks per week, performing A/B response comparisons under strict week-long sprint SLAs." },
-      { label: "Edge-Case Discovery", text: "Identified and documented critical model failure patterns and edge cases, crafting feedback that informed the client's next AI training iteration." },
-      { label: "Cross-Functional Handoff", text: "Partnered with the project manager to escalate issues and deliver polished QA deliverables on schedule." },
+      { text: "Executed 40+ rubric-based LLM evaluation tasks per week, performing A/B response comparisons under strict week-long sprint SLAs." },
+      { text: "Identified and documented critical model failure patterns and edge cases, crafting feedback that informed the client's next AI training iteration." },
+      { text: "Partnered with the project manager to escalate issues and deliver polished QA deliverables on schedule." },
     ],
   },
   {
@@ -178,10 +178,10 @@ export const workHistory: WorkRole[] = [
     end: "Dec 2023",
     location: "Remote / Illinois",
     bullets: [
-      { label: "Project Ownership", text: "Led the complete front-end lifecycle for a Fortune 500 client, delivering accessible, responsive desktop and mobile web applications." },
-      { label: "Accessibility", text: "Implemented ADA-compliant code aligning deliverables with modern standards." },
-      { label: "UI Modernization", text: "Redesigned legacy webpages into engaging, modern interfaces that improved usability and engagement." },
-      { label: "Cross-Functional Collaboration", text: "Worked closely with UX designers and backend engineers to ensure seamless functionality." },
+      { text: "Led the complete front-end lifecycle for a Fortune 500 client, delivering accessible, responsive desktop and mobile web applications." },
+      { text: "Implemented ADA-compliant code aligning deliverables with modern standards." },
+      { text: "Redesigned legacy webpages into engaging, modern interfaces that improved usability and engagement." },
+      { text: "Worked closely with UX designers and backend engineers to ensure seamless functionality." },
     ],
   },
   {
@@ -191,10 +191,10 @@ export const workHistory: WorkRole[] = [
     end: "Mar 2023",
     location: "Leland, NC",
     bullets: [
-      { label: "Modernization", text: "Led migration of legacy React codebases to containerized architectures using Docker, improving scalability and deployment efficiency." },
-      { label: "Mentorship", text: "Mentored junior developers and refined code review processes to maintain high-quality, maintainable code." },
-      { label: "Next.js Applications", text: "Developed data-driven applications using Next.js and Chart.js, boosting user engagement through interactive visualizations." },
-      { label: "Design Implementation", text: "Transformed complex design specs into scalable, accessible web apps that met WCAG standards across browsers." },
+      { text: "Led migration of legacy React codebases to containerized architectures using Docker, improving scalability and deployment efficiency." },
+      { text: "Mentored junior developers and refined code review processes to maintain high-quality, maintainable code." },
+      { text: "Developed data-driven applications using Next.js and Chart.js, boosting user engagement through interactive visualizations." },
+      { text: "Transformed complex design specs into scalable, accessible web apps that met WCAG standards across browsers." },
     ],
   },
   {
@@ -204,9 +204,9 @@ export const workHistory: WorkRole[] = [
     end: "Jul 2021",
     location: "Remote / Greensboro, NC",
     bullets: [
-      { label: "Customer Advocacy", text: "Provided remote support in Retail At Home, resolving technical issues and turning detractors into promoters." },
-      { label: "Technical Enablement", text: "Simplified complex Apple ecosystem concepts to empower users and increase product confidence." },
-      { label: "Relationship Repair", text: "Applied strong communication and problem-solving skills to rebuild strained customer relationships." },
+      { text: "Provided remote support in Retail At Home, resolving technical issues and turning detractors into promoters." },
+      { text: "Simplified complex Apple ecosystem concepts to empower users and increase product confidence." },
+      { text: "Applied strong communication and problem-solving skills to rebuild strained customer relationships." },
     ],
   },
   {
@@ -216,9 +216,9 @@ export const workHistory: WorkRole[] = [
     end: "Nov 2020",
     location: "Greensboro, NC",
     bullets: [
-      { label: "Customer Engagement", text: "Guided customers in identifying their needs to recommend the right Apple products, deepening brand connection." },
-      { label: "Sales Performance", text: "Consistently exceeded performance targets through adaptability and consultative selling." },
-      { label: "Innovation", text: "Created workflow efficiencies using Apple Shortcuts that improved team-wide customer experience strategies." },
+      { text: "Guided customers in identifying their needs to recommend the right Apple products, deepening brand connection." },
+      { text: "Consistently exceeded performance targets through adaptability and consultative selling." },
+      { text: "Created workflow efficiencies using Apple Shortcuts that improved team-wide customer experience strategies." },
     ],
   },
 ];
@@ -250,32 +250,22 @@ export const posts: Post[] = [
     title: "The Ops Layer Nobody Talks About",
     date: "2026-04-15",
     category: "Ops",
-    excerpt: "The unglamorous infrastructure that lets AI teams move at the speed everyone assumes they already do.",
-    content: `When people picture an AI company, they picture model training. GPUs humming, researchers staring at loss curves, the whole cinematic version of the work.
+    excerpt: "A new contributor signs at 9am. Are they working by lunch? That question is the whole job.",
+    content: `When people imagine an AI company, they imagine the research. GPUs, loss curves, the occasional dramatic whiteboard. I've spent the last few years inside two of these companies, and I can tell you where the drama actually lives: provisioning.
 
-## The part nobody photographs
+Here is the test I use. A new contributor signs their agreement at 9am. Are they working by lunch?
 
-What they don't picture is the ops layer underneath all of it: identity, access, tooling, contributor onboarding, vendor contracts, the thousand quiet decisions that determine whether the people doing the model work can actually do it.
+At most companies the honest answer is "by Thursday." Their manager has to remember every tool the team uses, file six access requests, chase down two of them, and apologize in Slack about a third. Multiply that by a few hundred contributors and you are not running a research lab anymore. You are running a very slow ticketing system with a research lab attached.
 
-I've spent the last few years building that layer at a couple of different companies, and I keep being surprised by how invisible it is — even to the people benefiting from it most.
+That gap between Thursday and lunch is the job. At G2i I built the operations layer from zero while we grew from 0 to 200 contributors. Okta sat at the center, with SSO and SCIM provisioning wired into everything, so one click onboarded a person into Slack, Google Workspace, Linear, Cursor, and 1Password. One click offboarded them too, which matters more than people think. Security reviews stop being archaeology when access has a single source of truth.
 
-## What it actually looks like
+At Mercor the same instinct showed up at a different scale. We sourced and onboarded 600+ domain experts in under a week so a client could launch their next-generation model on schedule. Nothing about that week was glamorous. It worked because the boring machinery underneath it — accounts, access, QA loops, escalation paths — had been built to absorb exactly that kind of load.
 
-> If you can onboard a new contributor in five minutes instead of five days, you've already won.
+The QA loops deserve their own mention. Human-in-the-loop pipelines we designed there took dataset accuracy from 90% to 98%, which sounds like a rounding error until you realize it cut two weeks of retraining out of the cycle. The model people got the credit. The pipeline made it possible. I have made my peace with that ordering. Mostly.
 
-A short, incomplete list of things that fall into "ops" at an AI company:
+This is the layer nobody talks about because when it works, it's invisible. Nobody writes a launch tweet about offboarding. But every AI team that feels fast is standing on someone's identity infrastructure, and every team that feels slow is drowning in access requests it has stopped noticing.
 
-- Identity infrastructure — SSO, SAML, SCIM-based provisioning
-- A consolidated tooling surface (Slack, Linear, Cursor, Workspace, 1Password)
-- Contributor pipelines: sourcing, vetting, onboarding, offboarding
-- QA loops that catch model and data failures *before* they reach the customer
-- Vendor relationships that don't fall apart on the second renewal
-
-None of that is glamorous. All of it determines whether the company ships.
-
-## Why I keep writing about this
-
-Because the people doing this work usually aren't the ones telling the story. And the story is worth telling.`,
+If you're standing up one of these teams, build the boring layer first. You will never get a better excuse than day one.`,
   },
   {
     slug: "why-i-built-this",
@@ -385,28 +375,23 @@ Build the thing. Learn from it. Break it open. See what else it can become.`,
     title: "The Never-Ending PC Build",
     date: "2026-03-18",
     category: "Tech",
-    excerpt: "Why building a PC is less about the rig and more about a small, repeatable lesson in patience.",
-    content: `My PC has been "done" approximately four times. Each time I was sure. Each time I wasn't.
+    excerpt: "Four \"final\" builds in, still on a 2018 GPU, and weirdly at peace with it.",
+    content: `My PC has been "done" four times now. I can prove it, because I still have the parts lists.
 
-## The trap
+The current build — the fourth final one — is an i7-8700, an RTX 2080, 32GB of RAM, and a terabyte of storage. If you know hardware, you just winced. That is a 2018-class machine, and every spec sheet on the internet agrees I should have replaced it years ago.
 
-The hobby looks like it's about hardware — GPUs, fans, custom cables, the satisfying click of a cleanly seated CPU. But after a few builds you realize the hardware is the lure. The actual hobby is decision-making under constraint.
+Here's the thing though: I have 3,500 hours in Fortnite, and it has never once been the PC's fault that I lost.
 
-## What it teaches
+Every year or so the itch comes back. I open the parts sites, spec out a full replacement, watch the total climb past what I'd actually pay, and start the real exercise — which is not shopping. It's being honest. What do I actually play? Competitive FPS games that are built to run on everything. What do I actually do? Code, browsers, too many Slack workspaces. Where is the actual bottleneck? Reader, it is not the GPU.
 
-> You have a budget, a case, a use case, and a thousand opinions on the internet. Pick a rig.
+So the full rebuild collapses into one targeted upgrade, or none at all, and the 2080 lives another year.
 
-Every upgrade is a tiny exercise in:
+I used to think this cycle meant I was bad at the hobby. I've come around to thinking the cycle _is_ the hobby. The research, the benchmarks, the forum threads from people whose use case is almost-but-not-quite mine, the moment you catch yourself justifying a purchase with a workload you do twice a year — every loop through it sharpens the same skill: making decisions under constraint, with imperfect information and a real budget.
 
-- Researching enough to be useful, not so much you stall
-- Spending where it actually matters and not where it just feels good
-- Being honest about what you'll really use the machine for
-- Letting "good enough" be good enough, on purpose
+That skill turns out to be most of my actual job. Vendor evaluations, tooling decisions, build-versus-buy — it's the parts list exercise wearing a collared shirt. Hardware is just the version with RGB and an honest feedback loop, because when you choose wrong, your frames drop where you can see them.
 
-It's the same skill I use at work. Just with more thermal paste.
+The 2080 will need to be replaced eventually. Something will come out that I genuinely can't run, the fifth final build will happen, and it will be glorious for about a month before the first upgrade thought arrives.
 
-## What I'm running right now
-
-Whatever it is, by the time you read this it's already on a list of things I want to upgrade. That's the joke. That's also the point.`,
+I already know what the post about it will be called.`,
   },
 ];

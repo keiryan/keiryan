@@ -1,8 +1,4 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { useEffect, useState } from "react";
 import About from "./pages/About.tsx";
@@ -16,7 +12,6 @@ import Post from "./pages/Post.tsx";
 import Work from "./pages/Work.tsx";
 import Writing from "./pages/Writing.tsx";
 
-const queryClient = new QueryClient();
 const previewStorageKey = "keiryan-admin-preview";
 
 function SiteRoutes() {
@@ -54,17 +49,11 @@ function SiteRoutes() {
 }
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <SiteRoutes />
-        </BrowserRouter>
-      </TooltipProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
+  <ThemeProvider>
+    <BrowserRouter>
+      <SiteRoutes />
+    </BrowserRouter>
+  </ThemeProvider>
 );
 
 export default App;

@@ -1,7 +1,13 @@
 import { type ReactNode } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export function Reveal({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return <div>{children}</div>;
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}

@@ -130,8 +130,8 @@ const Hobbies = () => {
           <section className="mt-24">
             <h2 className="font-display text-3xl font-semibold">Photography</h2>
             <p className="prose-article">
-              Mostly travel — Peru, Colombia, whatever city I'm walking through — and macro shots
-              of whatever's living in the yard. The hardest shoot I've done was{" "}
+              Mostly travel shots from Peru, Colombia, and whatever city I'm walking through, plus
+              macro shots of whatever's living in the yard. The hardest shoot I've done was{" "}
               <Link to="/photos" className="text-primary underline-offset-4 hover:underline">
                 a momma wolf spider
               </Link>{" "}
@@ -158,7 +158,7 @@ const Hobbies = () => {
           <section className="mt-24">
             <h2 className="font-display text-3xl font-semibold">Music</h2>
             <p className="prose-article">
-              Always something playing. Genre is a mood — a focus playlist for ops days, something
+              Always something playing. Genre is a mood: a focus playlist for ops days, something
               loud for builds, something patient for evenings. The best additions lately have come
               from other people, which is what the form below is for.
             </p>

@@ -21,7 +21,7 @@ const Index = () => {
               Hey, I'm Keiryan.
             </h1>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-              I build the unglamorous side of AI companies — onboarding, identity, tooling, the
+              I build the unglamorous side of AI companies: onboarding, identity, tooling, the
               machinery that decides whether everyone else gets to move fast. Before that I wrote
               front-end code, and before that I sold iPhones. This is where I write it all down.
             </p>
@@ -84,7 +84,7 @@ const Index = () => {
             <p className="text-lg leading-relaxed">
               Outside of work, I'm into PC gaming, building things, and chasing whatever's got my
               attention that week. I've spent years at the crossroads of technical operations and
-              front-end engineering — and somewhere along the way, I started wanting a place to just{" "}
+              front-end engineering, and somewhere along the way I started wanting a place to just{" "}
               <em>say things</em>. This is that place.
             </p>
             <Link to="/about" className="mt-6 inline-flex items-center gap-2 text-primary link-underline">

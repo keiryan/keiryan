@@ -23,7 +23,7 @@ export const navLinks = [
 
 export const currently = [
   { label: "Playing", text: "Fortnite (3,500 hours and counting) and Overwatch.", to: "/hobbies" },
-  { label: "Building", text: "This site — and resisting a fifth \"final\" PC build.", to: "/writing/hardware-obsession" },
+  { label: "Building", text: "This site, and resisting a fifth \"final\" PC build.", to: "/writing/hardware-obsession" },
   { label: "Shooting", text: "Macro spiders, travel, and the occasional handstand.", to: "/photos" },
   { label: "Listening", text: "Whatever people send me. There's a form for that.", to: "/hobbies" },
   { label: "Working on", text: "Wrapping an AI ops contract at G2i. Open to what's next.", to: "/work" },
@@ -138,7 +138,7 @@ export const workHistory: WorkRole[] = [
       { text: "Built core AI operations from inception through scale, standing up foundational systems and processes to support rapid growth from 0 to 200 contributors." },
       { text: "Owned operational execution after client acquisition, setting up the infrastructure, workflows, and tooling required for teams building simulated software environments used in reinforcement learning research." },
       { text: "Architected secure identity and access infrastructure using Okta, implementing SSO, SAML, and SCIM-based provisioning to enforce one-click onboarding and offboarding across all services." },
-      { text: "Researched, selected, deployed, and integrated enterprise SaaS tooling — Slack, Google Workspace, Linear, Cursor, OnePassword — tying systems together through internal automations to reduce manual ops overhead." },
+      { text: "Researched, selected, deployed, and integrated enterprise SaaS tooling (Slack, Google Workspace, Linear, Cursor, OnePassword), tying systems together through internal automations to reduce manual ops overhead." },
       { text: "Managed day-to-day AI operations spanning account provisioning, access controls, service reliability, vendor negotiations, and enterprise subscription upgrades in a fast-moving research environment." },
       { text: "Partnered with IT, engineering, and research stakeholders to align AI operations with security, compliance, and human data delivery requirements." },
     ],
@@ -152,9 +152,9 @@ export const workHistory: WorkRole[] = [
     bullets: [
       { text: "Spearheaded sourcing & onboarding of 600+ domain experts in <7 days, enabling client to launch their next-gen AI model on schedule." },
       { text: "Co-led AI training programs that directly supported $80M+ in ARR, managing delivery pipelines and execution across multiple high-complexity domains." },
-      { text: "Shaped vendor strategy alongside C-suite and represented the company in evaluations with a trillion-dollar partner — securing a $40M ARR engagement." },
+      { text: "Shaped vendor strategy alongside C-suite and represented the company in evaluations with a trillion-dollar partner, securing a $40M ARR engagement." },
       { text: "Designed human-in-the-loop QA pipelines that increased dataset accuracy from 90% to 98%, reducing retraining cycles by two weeks." },
-      { text: "Achieved 100% NPS — driving repeat engagement and earning client acknowledgment for exceptional operational leadership." },
+      { text: "Achieved 100% NPS, driving repeat engagement and earning client acknowledgment for exceptional operational leadership." },
     ],
   },
   {
@@ -259,7 +259,7 @@ At most companies the honest answer is "by Thursday." Their manager has to remem
 
 That gap between Thursday and lunch is the job. At G2i I built the operations layer from zero while we grew from 0 to 200 contributors. Okta sat at the center, with SSO and SCIM provisioning wired into everything, so one click onboarded a person into Slack, Google Workspace, Linear, Cursor, and 1Password. One click offboarded them too, which matters more than people think. Security reviews stop being archaeology when access has a single source of truth.
 
-At Mercor the same instinct showed up at a different scale. We sourced and onboarded 600+ domain experts in under a week so a client could launch their next-generation model on schedule. Nothing about that week was glamorous. It worked because the boring machinery underneath it — accounts, access, QA loops, escalation paths — had been built to absorb exactly that kind of load.
+At Mercor the same instinct showed up at a different scale. We sourced and onboarded 600+ domain experts in under a week so a client could launch their next-generation model on schedule. Nothing about that week was glamorous. It worked because the boring machinery underneath it had been built to absorb exactly that kind of load: accounts, access, QA loops, escalation paths.
 
 The QA loops deserve their own mention. Human-in-the-loop pipelines we designed there took dataset accuracy from 90% to 98%, which sounds like a rounding error until you realize it cut two weeks of retraining out of the cycle. The model people got the credit. The pipeline made it possible. I have made my peace with that ordering. Mostly.
 
@@ -284,7 +284,7 @@ Long before I knew what code, systems, interfaces, or the internet were, I had L
 
 ![A young Keiryan holding a Lego fire truck build.](/writing/lego-fire-truck.jpg "Little me with my first Lego set. A firetruck.")
 
-I loved following the instruction manual — there was something satisfying about turning that chaotic pile of plastic bricks into the thing on the box. But once I'd built the set, I would take it apart and challenge myself to build whatever else I could think of with the pieces I had. Instead of just a fire truck, I'd try to build a car, or a house, or a transformer — whatever I could imagine from what was in front of me. That became the game: figuring out what else was possible with the pieces I had.
+I loved following the instruction manual. There was something satisfying about turning that chaotic pile of plastic bricks into the thing on the box. But once I'd built the set, I would take it apart and challenge myself to build whatever else I could think of with the pieces I had. Instead of just a fire truck, I'd try to build a car, or a house, or a transformer, whatever I could imagine from what was in front of me. That became the game: figuring out what else was possible with the pieces I had.
 
 The fascination only grew as I got more Lego sets, and then I discovered Lego Creationary, which felt like someone had turned that exact instinct into a board game. You drew a card and had to figure out how to build whatever was on it with the pieces available to you. I absolutely adored that game. I played it with whoever I could, which was mostly my little sister at the time, and when nobody would play, I'd play it solo just to get better at building things faster and more creatively.
 
@@ -292,29 +292,29 @@ Then Minecraft entered the picture, and Minecraft was basically Legos in an infi
 
 That led me to mods. I wanted to change mobs, build my own mods, and understand how people were making the things I loved playing with. Somewhere in there I had a thought that probably changed the direction of my life: if I could learn to code, I could build more than what the game already gave me.
 
-I was homeschooled for sixth grade, and when I was supposed to be completing my studies, I kept sneaking off to learn Python on Grok Academy instead. I was in love with the idea that I could write in a language computers understood — that I could type something, run it, break it, fix it, and slowly make the machine do what I wanted.
+I was homeschooled for sixth grade, and when I was supposed to be completing my studies, I kept sneaking off to learn Python on Grok Academy instead. I was in love with the idea that I could write in a language computers understood. I could type something, run it, break it, fix it, and slowly make the machine do what I wanted.
 
 ![A Grok Academy Python lesson showing a passed beginner programming exercise.](/writing/grok-academy-python.png "One of the Grok Academy Python lessons where I learned the basics.")
 
 There was one problem: I wasn't allowed to have a computer. My parents were careful about how much computer time we got, which, honestly, was probably fair. The internet is a scary place for kids!
 
-But I found a really old laptop in the garage. Thick — the thing must have weighed five pounds — and prehistoric, with about an hour of battery life. I installed a Python IDE on a thumb drive, snuck the laptop out of the garage, and since my room was in the basement, I'd wait until everyone else was asleep and write code at night.
+But I found a really old laptop in the garage. Thick, prehistoric, the kind of thing that must have weighed five pounds and got about an hour of battery life. I installed a Python IDE on a thumb drive, snuck the laptop out of the garage, and since my room was in the basement, I'd wait until everyone else was asleep and write code at night.
 
-The first real thing I remember building was a terminal game based on a doll family my sister and I had invented. I wanted it to feel like some kind of hacker game. The code was terrible — truly tragic, a pile of switch statements, broken logic, and oddly named variables — but it worked enough to make me feel like I'd actually created something. Code turned out to be a building block, just like my Legos from long before. And building that awful little game taught me how to debug, how to research, how to read documentation, and how to get stuck and stay with it until I found a way through.
+The first real thing I remember building was a terminal game based on a doll family my sister and I had invented. I wanted it to feel like some kind of hacker game. The code was absolutely terrible, just a pile of switch statements, broken logic, and oddly named variables, but it worked enough to make me feel like I'd actually created something. Code turned out to be a building block, just like my Legos from long before. And building that awful little game taught me how to debug, how to research, how to read documentation, and how to get stuck and stay with it until I found a way through.
 
 That love of coding sat on the back burner for years. I worked at Apple retail for almost two years, which might seem unrelated, but it taught me more than I realized at the time: communication, empathy, listening, explaining technical things to people without making them feel small, staying calm when someone is frustrated and figuring out what they actually need.
 
 I really, really wanted to stay with Apple. But when I moved to Wilmington, North Carolina, there was no Apple retail store anywhere nearby, and I knew I had to jump into something different.
 
-So in 2021, I came back to coding. I found a mentor — Cristian Florea, a Romanian developer who introduced me to front-end development — and that was the beginning of my tech career.
+So in 2021, I came back to coding. I found a mentor named Cristian Florea, a Romanian developer who introduced me to front-end development, and that was the beginning of my tech career.
 
 It was also maybe the worst time in history to try to break into tech. The market was collapsing, companies were laying people off left and right, and my hopes and dreams of jumping straight into a development job kind of shattered. It took months and months of trying, then more months after that. After about a year and a half, I finally landed my first development role.
 
-Since then the work has moved through front-end development, AI operations, identity infrastructure, internal tooling, and the kind of operational problem-solving that sits between people, software, and process. The tools keep changing — Legos became Minecraft, Minecraft became Python, Python became JavaScript and React and whatever else the problem requires — but the instinct hasn't: take the pieces in front of me, understand how they work, build the thing the instructions describe, then take it apart and see what else it could become.
+Since then the work has moved through front-end development, AI operations, identity infrastructure, internal tooling, and the kind of operational problem-solving that sits between people, software, and process. The tools keep changing. Legos became Minecraft, Minecraft became Python, Python became JavaScript and React and whatever else the problem requires. But the instinct hasn't changed: take the pieces in front of me, understand how they work, build the thing the instructions describe, then take it apart and see what else it could become.
 
-That's why I built this site. I wanted a place on the internet that felt like mine — a home base where I can write things down, document what I'm learning, and connect the parts of my work that don't always fit neatly into one category. For a long time those interests felt scattered. This site is an attempt to gather them into one place. We'll see how that works out 😂
+That's why I built this site. I wanted a place on the internet that felt like mine. A home base where I can write things down, document what I'm learning, and connect the parts of my work that don't always fit neatly into one category. For a long time those interests felt scattered. This site is an attempt to gather them into one place. We'll see how that works out 😂
 
-It won't be perfect, and I don't want it to be. I want it to feel alive — something I can keep taking apart and rebuilding as I learn more. That has always been the point.
+It won't be perfect, and I don't want it to be. I want it to feel alive, like something I can keep taking apart and rebuilding as I learn more. That has always been the point.
 
 Build the thing. Learn from it. Break it open. See what else it can become.`,
   },
@@ -326,17 +326,17 @@ Build the thing. Learn from it. Break it open. See what else it can become.`,
     excerpt: "Four \"final\" builds in, still on a 2018 GPU, and weirdly at peace with it.",
     content: `My PC has been "done" four times now. I can prove it, because I still have the parts lists.
 
-The current build — the fourth final one — is an i7-8700, an RTX 2080, 32GB of RAM, and a terabyte of storage. If you know hardware, you just winced. That is a 2018-class machine, and every spec sheet on the internet agrees I should have replaced it years ago.
+The current build, the fourth final one, is an i7-8700, an RTX 2080, 32GB of RAM, and a terabyte of storage. If you know hardware, you just winced. That is a 2018-class machine, and every spec sheet on the internet agrees I should have replaced it years ago.
 
 Here's the thing though: I have 3,500 hours in Fortnite, and it has never once been the PC's fault that I lost.
 
-Every year or so the itch comes back. I open the parts sites, spec out a full replacement, watch the total climb past what I'd actually pay, and start the real exercise — which is not shopping. It's being honest. What do I actually play? Competitive FPS games that are built to run on everything. What do I actually do? Code, browsers, too many Slack workspaces. Where is the actual bottleneck? Reader, it is not the GPU.
+Every year or so the itch comes back. I open the parts sites, spec out a full replacement, watch the total climb past what I'd actually pay, and start the real exercise, which is not shopping. It's being honest. What do I actually play? Competitive FPS games that are built to run on everything. What do I actually do? Code, browsers, too many Slack workspaces. Where is the actual bottleneck? Reader, it is not the GPU.
 
 So the full rebuild collapses into one targeted upgrade, or none at all, and the 2080 lives another year.
 
-I used to think this cycle meant I was bad at the hobby. I've come around to thinking the cycle _is_ the hobby. The research, the benchmarks, the forum threads from people whose use case is almost-but-not-quite mine, the moment you catch yourself justifying a purchase with a workload you do twice a year — every loop through it sharpens the same skill: making decisions under constraint, with imperfect information and a real budget.
+I used to think this cycle meant I was bad at the hobby. I've come around to thinking the cycle _is_ the hobby. The research, the benchmarks, the forum threads from people whose use case is almost-but-not-quite mine, the moment you catch yourself justifying a purchase with a workload you do twice a year. Every loop through it sharpens the same skill: making decisions under constraint, with imperfect information and a real budget.
 
-That skill turns out to be most of my actual job. Vendor evaluations, tooling decisions, build-versus-buy — it's the parts list exercise wearing a collared shirt. Hardware is just the version with RGB and an honest feedback loop, because when you choose wrong, your frames drop where you can see them.
+That skill turns out to be most of my actual job. Vendor evaluations, tooling decisions, build-versus-buy: it's all the parts list exercise wearing a collared shirt. Hardware is just the version with RGB and an honest feedback loop, because when you choose wrong, your frames drop where you can see them.
 
 The 2080 will need to be replaced eventually. Something will come out that I genuinely can't run, the fifth final build will happen, and it will be glorious for about a month before the first upgrade thought arrives.
 

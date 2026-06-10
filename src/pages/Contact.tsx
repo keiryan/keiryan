@@ -8,7 +8,7 @@ const Contact = () => {
       <section className="container-prose py-24">
         <h1 className="font-display text-5xl font-bold md:text-6xl">Say hello.</h1>
         <p className="mt-6 text-lg text-muted-foreground">
-          Whether it's about a role, a project, or just something you wanted to say — I'm reachable.
+          Whether it's about a role, a project, or just something you wanted to say, I'm reachable.
         </p>
 
         <ul className="mt-12 space-y-4">

@@ -12,7 +12,7 @@ const Work = () => {
         <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
           I've led AI operations at two AI-training companies and shipped front-end for Fortune
           500 clients before that. I'm best at the zero-to-one phase: new team, no systems,
-          figure it out — then build the infrastructure so nobody has to figure it out twice.
+          figure it out, then build the infrastructure so nobody has to figure it out twice.
         </p>
 
         <div className="mt-8">
@@ -39,12 +39,12 @@ const Work = () => {
                       <h3 className="font-display text-2xl font-semibold">
                         {role.company}
                         <span className="ml-2 font-sans text-base font-medium text-muted-foreground">
-                          — {role.title}
+                          – {role.title}
                           {role.type ? ` (${role.type})` : ""}
                         </span>
                       </h3>
                       <p className="font-mono text-xs text-muted-foreground">
-                        {role.start} — {role.end} · {role.location}
+                        {role.start} – {role.end} · {role.location}
                       </p>
                     </div>
                     <ul className="mt-5 space-y-3 text-sm leading-relaxed">

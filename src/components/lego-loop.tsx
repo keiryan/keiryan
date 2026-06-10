@@ -50,11 +50,9 @@ export function LegoLoop() {
     <div className="flex justify-center" role="img" aria-label="Animation of a red Lego brick clicking onto a blue one, over and over.">
       <style>{`
         @keyframes lego-drop {
-          0%, 8% { transform: translateY(-56px); }
-          30% { transform: translateY(0); }
-          37% { transform: translateY(-6px); }
-          44%, 78% { transform: translateY(0); }
-          92%, 100% { transform: translateY(-56px); }
+          0%, 14% { transform: translateY(-56px); animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+          26%, 82% { transform: translateY(0); }
+          94%, 100% { transform: translateY(-56px); }
         }
         .lego-drop {
           animation: lego-drop 4.6s ease-in-out infinite;

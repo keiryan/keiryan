@@ -27,7 +27,7 @@ const Photos = () => {
               <button
                 type="button"
                 onClick={() => setSelectedPhoto(photo)}
-                className="group relative mb-4 block w-full break-inside-avoid overflow-hidden rounded-lg border border-border bg-card/60 text-left shadow-sm outline-none transition-[border-color,box-shadow] duration-200 hover:border-primary/40 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="group relative mb-4 block w-full break-inside-avoid overflow-hidden rounded-lg border border-border bg-card/60 text-left shadow-sm outline-none transition-colors duration-200 hover:border-primary/40 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 aria-label={`Open ${photo.title ?? photo.alt}`}
               >
                 <img

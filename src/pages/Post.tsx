@@ -60,7 +60,7 @@ const Post = () => {
               <Link
                 key={p.slug}
                 to={`/writing/${p.slug}`}
-                className="group rounded-lg border border-border bg-card/40 p-5 transition-all hover:-translate-y-0.5 hover:bg-card"
+                className="group rounded-lg border border-border bg-card/40 p-5 transition-colors hover:bg-card"
               >
                 <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
                   {p.category}

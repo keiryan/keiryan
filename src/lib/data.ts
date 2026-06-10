@@ -316,7 +316,9 @@ That's why I built this site. I wanted a place on the internet that felt like mi
 
 It won't be perfect, and I don't want it to be. I want it to feel alive, like something I can keep taking apart and rebuilding as I learn more. That has always been the point.
 
-Build the thing. Learn from it. Break it open. See what else it can become.`,
+Build the thing. Learn from it. Break it open. See what else it can become.
+
+::lego And then do it again.`,
   },
   {
     slug: "hardware-obsession",

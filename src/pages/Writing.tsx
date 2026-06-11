@@ -39,21 +39,21 @@ const Writing = () => {
           ))}
         </div>
 
-        <ul className="mt-10 divide-y divide-border">
+        <ul className="mt-10 divide-y divide-border border-y border-border">
           {list.map((p) => (
-            <li key={p.slug} className="py-6">
-              <Link to={`/writing/${p.slug}`} className="group block">
+            <li key={p.slug}>
+              <Link to={`/writing/${p.slug}`} className="group block py-7">
                 <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-muted-foreground">
                   <time>{formatDate(p.date)}</time>
                   <span>·</span>
-                  <span>{readingTime(p.content)} min</span>
+                  <span>{readingTime(p.content)} min read</span>
                   <span>·</span>
                   <span className="uppercase tracking-wider">{p.category}</span>
                 </div>
-                <h2 className="mt-2 font-display text-2xl font-semibold link-underline group-hover:text-primary">
+                <h2 className="mt-3 font-display text-2xl font-semibold transition-colors group-hover:text-primary">
                   {p.title}
                 </h2>
-                <p className="mt-2 text-muted-foreground">{p.excerpt}</p>
+                <p className="mt-2 max-w-2xl text-muted-foreground">{p.excerpt}</p>
               </Link>
             </li>
           ))}

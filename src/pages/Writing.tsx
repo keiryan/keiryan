@@ -1,16 +1,16 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout";
-import { posts } from "@/lib/data";
+import { publishedPosts } from "@/lib/data";
 import { formatDate, readingTime, cn } from "@/lib/utils";
 
-const categories = ["All", "Tech", "Ops", "Life", "Reflections"] as const;
+const categories = ["All", "Life"] as const;
 
 const Writing = () => {
   const [filter, setFilter] = useState<(typeof categories)[number]>("All");
 
   const list = useMemo(() => {
-    const sorted = [...posts].sort((a, b) => +new Date(b.date) - +new Date(a.date));
+    const sorted = [...publishedPosts].sort((a, b) => +new Date(b.date) - +new Date(a.date));
     return filter === "All" ? sorted : sorted.filter((p) => p.category === filter);
   }, [filter]);
 

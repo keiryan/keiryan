@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout";
 import { Reveal } from "@/components/reveal";
 import { PolaroidPlaceholder } from "@/components/polaroid";
-import { currently, posts, siteConfig } from "@/lib/data";
+import { currently, publishedPosts, siteConfig } from "@/lib/data";
 import { formatDate, readingTime } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 
 const Index = () => {
-  const recent = [...posts].sort((a, b) => +new Date(b.date) - +new Date(a.date)).slice(0, 3);
+  const recent = [...publishedPosts].sort((a, b) => +new Date(b.date) - +new Date(a.date)).slice(0, 3);
 
   return (
     <Layout>

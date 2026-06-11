@@ -23,7 +23,7 @@ export const navLinks = [
 
 export const currently = [
   { label: "Playing", text: "Fortnite (3,500 hours and counting) and Overwatch.", to: "/hobbies" },
-  { label: "Building", text: "This site, and resisting a fifth \"final\" PC build.", to: "/writing/hardware-obsession" },
+  { label: "Building", text: "This site, and writing down why it exists.", to: "/writing/why-i-built-this" },
   { label: "Shooting", text: "Macro spiders, travel, and the occasional handstand.", to: "/photos" },
   { label: "Listening", text: "Whatever people send me. There's a form for that.", to: "/hobbies" },
   { label: "Working on", text: "Wrapping an AI ops contract at G2i. Open to what's next.", to: "/work" },
@@ -358,6 +358,7 @@ export type Post = {
   date: string;
   category: "Tech" | "Ops" | "Life" | "Reflections";
   excerpt: string;
+  published?: boolean;
   image?: {
     src: string;
     alt: string;
@@ -372,6 +373,7 @@ export const posts: Post[] = [
     title: "The Ops Layer Nobody Talks About",
     date: "2026-04-15",
     category: "Ops",
+    published: false,
     excerpt: "A new contributor signs at 9am. Are they working by lunch? That question is the whole job.",
     content: `When people imagine an AI company, they imagine the research. GPUs, loss curves, the occasional dramatic whiteboard. I've spent the last few years inside two of these companies, and I can tell you where the drama actually lives: provisioning.
 
@@ -392,7 +394,7 @@ If you're standing up one of these teams, build the boring layer first. You will
   {
     slug: "why-i-built-this",
     title: "Why I Built This Site",
-    date: "2026-04-02",
+    date: "2026-06-11",
     category: "Life",
     excerpt: "A thread from Legos to code, and why I wanted a home base on the internet.",
     image: {
@@ -447,6 +449,7 @@ Build the thing. Learn from it. Break it open. See what else it can become.
     title: "The Never-Ending PC Build",
     date: "2026-03-18",
     category: "Tech",
+    published: false,
     excerpt: "Four \"final\" builds in, still on a 2018 GPU, and weirdly at peace with it.",
     content: `My PC has been "done" four times now. I can prove it, because I still have the parts lists.
 
@@ -467,3 +470,5 @@ The 2080 will need to be replaced eventually. Something will come out that I gen
 I already know what the post about it will be called.`,
   },
 ];
+
+export const publishedPosts = posts.filter((post) => post.published !== false);

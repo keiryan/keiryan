@@ -2,16 +2,16 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Layout } from "@/components/layout";
 import { Markdown } from "@/components/markdown";
-import { posts } from "@/lib/data";
+import { publishedPosts } from "@/lib/data";
 import { formatDate, readingTime } from "@/lib/utils";
 import NotFound from "./NotFound";
 
 const Post = () => {
   const { slug } = useParams<{ slug: string }>();
-  const post = posts.find((p) => p.slug === slug);
+  const post = publishedPosts.find((p) => p.slug === slug);
   if (!post) return <NotFound />;
 
-  const related = posts.filter((p) => p.slug !== post.slug).slice(0, 2);
+  const related = publishedPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
 
   return (
     <Layout title={post.title}>
@@ -53,25 +53,27 @@ const Post = () => {
           <Markdown source={post.content} />
         </div>
 
-        <footer className="container-prose mt-20 border-t border-border pt-10">
-          <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">More posts</p>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            {related.map((p) => (
-              <Link
-                key={p.slug}
-                to={`/writing/${p.slug}`}
-                className="group rounded-lg border border-border bg-card/40 p-5 transition-colors hover:bg-card"
-              >
-                <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                  {p.category}
-                </p>
-                <h3 className="mt-2 font-display text-lg font-semibold group-hover:text-primary">
-                  {p.title}
-                </h3>
-              </Link>
-            ))}
-          </div>
-        </footer>
+        {related.length > 0 ? (
+          <footer className="container-prose mt-20 border-t border-border pt-10">
+            <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">More posts</p>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              {related.map((p) => (
+                <Link
+                  key={p.slug}
+                  to={`/writing/${p.slug}`}
+                  className="group rounded-lg border border-border bg-card/40 p-5 transition-colors hover:bg-card"
+                >
+                  <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                    {p.category}
+                  </p>
+                  <h3 className="mt-2 font-display text-lg font-semibold group-hover:text-primary">
+                    {p.title}
+                  </h3>
+                </Link>
+              ))}
+            </div>
+          </footer>
+        ) : null}
       </article>
     </Layout>
   );

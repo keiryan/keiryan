@@ -1,6 +1,7 @@
 // Lightweight markdown-ish renderer. Sufficient for short posts.
-// Handles: ## h2, ### h3, > blockquote, images with optional captions, lists (- ...), paragraphs, --- hr, `code`, _emphasis_.
+// Handles: ## h2, ### h3, > blockquote, images with optional captions, lists (- ...), paragraphs, --- hr, `code`, _emphasis_, ::lego with optional caption.
 import { Fragment } from "react";
+import { LegoLoop } from "./lego-loop";
 
 function renderInline(text: string) {
   const parts = text.split(/(`[^`]+`|_[^_]+_)/g);
@@ -39,6 +40,20 @@ export function Markdown({ source }: { source: string }) {
     }
     if (line.trim() === "---") {
       out.push(<hr key={key++} />);
+      i++; continue;
+    }
+    if (line.startsWith("::lego")) {
+      const caption = line.slice(6).trim();
+      out.push(
+        <figure key={key++} className="my-10">
+          <LegoLoop />
+          {caption && (
+            <figcaption className="mt-3 text-center font-mono text-xs leading-relaxed text-muted-foreground">
+              {caption}
+            </figcaption>
+          )}
+        </figure>
+      );
       i++; continue;
     }
     if (line.startsWith("![")) {

@@ -56,11 +56,19 @@ const About = () => {
           </p>
 
           <h2>Tech I reach for</h2>
+          <p>
+            I'm currently obsessed with things that help me build and create: a notebook, a
+            pencil, a black pen, Claude Code, Codex, my MacBook Pro, and my Vision Pro.
+          </p>
+          <p>
+            My MacBook Pro is still my favorite Apple product, and Vision Pro is powering my
+            desktops while giving me a taste of what AR is going to feel like in the future.
+          </p>
           <ul>
-            <li>React, Next.js, TypeScript, Tailwind</li>
-            <li>Okta, Linear, Slack, Google Workspace</li>
-            <li>Cursor, GitHub, Docker</li>
-            <li>A notebook and a black pen</li>
+            <li>A notebook, a pencil, and a black pen</li>
+            <li>Claude Code and Codex</li>
+            <li>MacBook Pro</li>
+            <li>Vision Pro</li>
           </ul>
 
           <h2>Connect</h2>

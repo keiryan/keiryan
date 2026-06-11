@@ -1,7 +1,6 @@
 import { type ReactNode, useState } from "react";
-import { Instagram, MapPin } from "lucide-react";
+import { Camera, Instagram, MapPin, Smartphone } from "lucide-react";
 import { Layout } from "@/components/layout";
-import { IPhoneProIcon, SonyFX30Icon } from "@/components/camera-icons";
 import { Markdown } from "@/components/markdown";
 import { Reveal } from "@/components/reveal";
 import {
@@ -14,9 +13,9 @@ import { cameraLabels, photos, type Photo } from "@/lib/data";
 
 function CameraIcon({ photo, className }: { photo: Photo; className?: string }) {
   return photo.camera === "iPhone" ? (
-    <IPhoneProIcon className={className} aria-hidden="true" />
+    <Smartphone className={className} aria-hidden="true" />
   ) : (
-    <SonyFX30Icon className={className} aria-hidden="true" />
+    <Camera className={className} aria-hidden="true" />
   );
 }
 
@@ -66,7 +65,7 @@ const Photos = () => {
                     {photo.title ?? photo.location}
                   </p>
                   <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                    <MetaChip icon={<CameraIcon photo={photo} className="h-3.5 w-3.5" />} label={cameraLabels[photo.camera]} />
+                    <MetaChip icon={<CameraIcon photo={photo} className="h-4 w-4" />} label={cameraLabels[photo.camera]} />
                     <MetaChip icon={<MapPin className="h-3.5 w-3.5" aria-hidden="true" />} label={photo.location} />
                   </div>
                 </div>
@@ -93,10 +92,10 @@ const Photos = () => {
                   className="relative max-h-[58vh] w-full object-contain lg:max-h-[92vh]"
                 />
               </div>
-              <div className="flex min-h-0 flex-col overflow-y-auto p-6 md:p-8">
+              <div className="relative flex min-h-0 flex-col overflow-y-auto p-6 pb-16 md:p-8 md:pb-20">
                 <div className="mb-5 flex flex-wrap gap-2">
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                    <CameraIcon photo={selectedPhoto} className="h-3.5 w-3.5" />
+                    <CameraIcon photo={selectedPhoto} className="h-4 w-4" />
                     {cameraLabels[selectedPhoto.camera]}
                   </span>
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
@@ -120,7 +119,7 @@ const Photos = () => {
                   </p>
                 )}
                 {selectedPhoto.instagram ? (
-                  <div className="mt-6 flex justify-end">
+                  <div className="absolute bottom-6 right-6 md:bottom-8 md:right-8">
                     <a
                       href={selectedPhoto.instagram}
                       target="_blank"

@@ -29,90 +29,212 @@ export const currently = [
   { label: "Working on", text: "Wrapping an AI ops contract at G2i. Open to what's next.", to: "/work" },
 ];
 
-export type PhotoSeries = "Misc" | "Colombia" | "Spider" | "Peru";
+export type PhotoCamera = "iPhone" | "Sony";
+
+export const cameraLabels: Record<PhotoCamera, string> = {
+  iPhone: "Shot on iPhone",
+  Sony: "Shot on Sony",
+};
 
 export type Photo = {
   src: string;
   alt: string;
-  series: PhotoSeries;
+  camera: PhotoCamera;
+  location: string;
   title?: string;
   caption?: string;
   story?: string;
+  instagram?: string;
   featured?: boolean;
 };
 
 export const photos: Photo[] = [
-  { src: "/photos/misc-dsc04006.png", alt: "Ripples on dark water catching low sunlight", series: "Misc", title: "Still frame", featured: true },
-  { src: "/photos/colombia-messcam-4794.png", alt: "A woman with curly hair smiling on a high-rise balcony, mountains hazy behind her", series: "Colombia" },
+  {
+    src: "/photos/misc-dsc04006.png",
+    alt: "Ripples on dark water catching low sunlight",
+    camera: "Sony",
+    location: "Leland, NC",
+    title: "An inviting lake.",
+    story: "The lake just behind my house on a breezy day.",
+    instagram: "https://www.instagram.com/p/DBysdFoO3MT/",
+    featured: true,
+  },
+  {
+    src: "/photos/colombia-messcam-4794.png",
+    alt: "A woman with curly hair smiling on a high-rise balcony, mountains hazy behind her",
+    camera: "Sony",
+    location: "Medellin, Colombia",
+    title: "A foreign friend.",
+    story: "One of the many beautiful people I met in Colombia. Turned out to be an impromptu photoshoot.",
+    instagram: "https://www.instagram.com/p/DUzEsdQDK-U/?img_index=1",
+  },
   {
     src: "/photos/spider-img-6545.png",
     alt: "A momma wolf spider photographed up close",
-    series: "Spider",
+    camera: "iPhone",
+    location: "Leland, NC",
     title: "Momma Wolfy",
     story: "A momma wolf spider I saw and just _had_ to photograph. This shoot required a focus merge to be able to get so close and still have the entire spider in focus. It was probably the most difficult photoshoot I have done to date. Shot on my iPhone 13 Pro Max.",
+    instagram: "https://www.instagram.com/reel/CjihZjftaKs/",
   },
   {
     src: "/photos/misc-nicole.png",
     alt: "Nicole flexing her biceps at Kure Beach",
-    series: "Misc",
+    camera: "Sony",
+    location: "Kure Beach, NC",
     title: "Nicole",
     caption: "Ocean light",
     story: "My friend Nicole flexing her biceps at Kure Beach.",
+    instagram: "https://www.instagram.com/reel/C_rZMf-NWWL/",
   },
-  { src: "/photos/misc-img-1808.png", alt: "A handstand on parallette bars in a driveway, trees in the background", series: "Misc" },
+  {
+    src: "/photos/misc-img-1808.png",
+    alt: "A handstand on parallette bars in a driveway, trees in the background",
+    camera: "Sony",
+    location: "Leland, NC",
+    title: "Calisthenics & I.",
+    story: "One of my many fitness goals is a handstand pushup. Haven’t quite got it yet, but I am always trying for it.",
+  },
   {
     src: "/photos/peru-img-1130.png",
     alt: "Justin and Keiryan before leaving an Airbnb in Cusco, Peru",
-    series: "Peru",
+    camera: "Sony",
+    location: "Cusco, Peru",
     title: "Twinergy",
     story: "Justin (one of my close friends) and I just before we left our 2nd Airbnb in Cusco, Peru.",
+    instagram: "https://www.instagram.com/p/DB_3ZYEygVh/",
     featured: true,
   },
-  { src: "/photos/misc-dsc07075.png", alt: "Portrait of a man wearing sunglasses near a bridge", series: "Misc", title: "In motion" },
-  { src: "/photos/spider-img-6569.png", alt: "A wolf spider in the grass, her back covered in spiderlings", series: "Spider" },
-  { src: "/photos/misc-img-1823.png", alt: "A handstand on parallettes in the middle of a baseball diamond", series: "Misc" },
-  { src: "/photos/colombia-messcam-4797.png", alt: "A woman in a blue dress dancing on a balcony above a sprawling city skyline", series: "Colombia" },
-  { src: "/photos/misc-img-9755.png", alt: "A jet crossing an overcast sky, contrail trailing behind", series: "Misc" },
+  {
+    src: "/photos/misc-dsc07075.png",
+    alt: "Portrait of a man wearing sunglasses near a bridge",
+    camera: "Sony",
+    location: "Miami, FL",
+    title: "In motion",
+    story: "A guy Justin and I encountered in our travels in Miami. His name was “Nick”. I thought his vibe was such an aesthetic I had to ask him for a photoshoot. Very impromptu.",
+    instagram: "https://www.instagram.com/reel/CjihZjftaKs/",
+  },
+  {
+    src: "/photos/spider-img-6569.png",
+    alt: "A wolf spider in the grass, her back covered in spiderlings",
+    camera: "iPhone",
+    location: "Leland, NC",
+    title: "Momma Wolfy II",
+    story: "Another shot of mama bear holding her babies.",
+    instagram: "https://www.instagram.com/reel/CjihZjftaKs/",
+  },
+  {
+    src: "/photos/misc-img-1823.png",
+    alt: "A handstand on parallettes in the middle of a baseball diamond",
+    camera: "Sony",
+    location: "Leland, NC",
+    title: "Calisthenics & I Pt. II",
+    story: "One of my many fitness goals is a handstand pushup. Haven’t quite got it yet, but I am always trying for it.",
+  },
+  {
+    src: "/photos/colombia-messcam-4797.png",
+    alt: "A woman in a blue dress dancing on a balcony above a sprawling city skyline",
+    camera: "Sony",
+    location: "Medellin, Colombia",
+    title: "A foreign friend II",
+    story: "One of the many beautiful people I met in Colombia. Turned out to be an impromptu photoshoot.",
+    instagram: "https://www.instagram.com/p/DUzEsdQDK-U/",
+  },
+  {
+    src: "/photos/misc-img-9755.png",
+    alt: "A jet crossing an overcast sky, contrail trailing behind",
+    camera: "iPhone",
+    location: "Leland, NC",
+    title: "On Cloud 9",
+    story: "A plane traveling through the clouds over my house.",
+    instagram: "https://www.instagram.com/p/C-A4BSLOXxa/",
+  },
   {
     src: "/photos/misc-img-9751.png",
     alt: "Plane cutting through heavy clouds",
-    series: "Misc",
+    camera: "iPhone",
+    location: "Leland, NC",
     title: "Through the clouds",
     story: "Shot on iPhone 15 Pro Max.",
+    instagram: "https://www.instagram.com/p/C-A4BSLOXxa/",
   },
   {
     src: "/photos/misc-img-0312.png",
     alt: "Portrait of Keiryan smiling outdoors with a backpack",
-    series: "Misc",
-    title: "Somewhere green",
+    camera: "Sony",
+    location: "Miami, FL",
+    title: "Miami just before Peru.",
     story: "Standing in Miami with Justin just before boarding our flights to Peru.",
   },
-  { src: "/photos/spider-img-6582.png", alt: "Macro close-up of a wolf spider's face, spiderlings riding on her back", series: "Spider" },
+  {
+    src: "/photos/spider-img-6582.png",
+    alt: "Macro close-up of a wolf spider's face, spiderlings riding on her back",
+    camera: "iPhone",
+    location: "Leland, NC",
+    title: "Mama Wolfy III",
+    story: "Another shot of mama bear holding her babies.",
+    instagram: "https://www.instagram.com/reel/CjihZjftaKs/",
+  },
   {
     src: "/photos/peru-img-0133.png",
     alt: "Sunset over the beach in Peru",
-    series: "Peru",
+    camera: "Sony",
+    location: "Lima, Peru",
     title: "Sunset at La Playa",
     story: "A gorgeous burn of a sunset at the beach in Peru.",
   },
-  { src: "/photos/misc-dsc07909.png", alt: "Black-and-white street portrait of a man resting on marble steps outside a storefront", series: "Misc" },
-  { src: "/photos/spider-img-6621.png", alt: "A wolf spider facing the camera head-on, eyes in sharp focus", series: "Spider" },
+  {
+    src: "/photos/misc-dsc07909.png",
+    alt: "Black-and-white street portrait of a man resting on marble steps outside a storefront",
+    camera: "Sony",
+    location: "Lima, Peru",
+    title: "The streets of Peru.",
+    story: "The reality of the streets of Lima, Peru.",
+    instagram: "https://www.instagram.com/p/DCKUlSiSBD2/",
+  },
+  {
+    src: "/photos/spider-img-6621.png",
+    alt: "A wolf spider facing the camera head-on, eyes in sharp focus",
+    camera: "iPhone",
+    location: "Leland, NC",
+    title: "Mama Wolfy IV",
+    story: "Another shot of mama bear holding her babies.",
+    instagram: "https://www.instagram.com/reel/CjihZjftaKs/",
+  },
   {
     src: "/photos/misc-ben-2.png",
     alt: "A campfire with friends in Georgia",
-    series: "Misc",
+    camera: "Sony",
+    location: "Dallas, GA",
     title: "A fire with friends",
     story: "A scene from a campfire with friends in Georgia.",
+    instagram: "https://www.instagram.com/p/DCCbFdkvzN0/",
   },
   {
     src: "/photos/misc-img-9612.png",
     alt: "Night street scene outside a storefront in Los Angeles",
-    series: "Misc",
+    camera: "iPhone",
+    location: "Los Angeles, CA",
     title: "A night in LA",
-    story: "LA is often painted as very glamorous in Hollywood. I guess that’s because it is Hollywood. The reality off-screen is very different, however, and a night spent walking through LA will quickly teach you that.",
+    story: "LA is often painted as very glamorous in Hollywood. I guess that's because it is Hollywood. The reality off-screen is very different, however, and a night spent walking through LA will quickly teach you that.",
+    instagram: "https://www.instagram.com/p/DCFIbrIyd_l/",
   },
-  { src: "/photos/misc-img-4418.png", alt: "A smiling man with FPV drone goggles pushed up on his forehead, green field behind him", series: "Misc" },
-  { src: "/photos/misc-img-0226.png", alt: "Golden wild grass catching the afternoon sun", series: "Misc" },
+  {
+    src: "/photos/misc-img-4418.png",
+    alt: "A smiling man with FPV drone goggles pushed up on his forehead, green field behind him",
+    camera: "Sony",
+    location: "Leland, NC",
+    title: "Me flying FPV.",
+    story: "BTS of me flying my drone. One of my many hobbies.",
+  },
+  {
+    src: "/photos/misc-img-0226.png",
+    alt: "Golden wild grass catching the afternoon sun",
+    camera: "iPhone",
+    location: "Los Angeles, CA",
+    title: "Sunset in LA",
+    story: "Some plants right outside of a stadium in LA.",
+  },
 ];
 
 export type WorkRole = {

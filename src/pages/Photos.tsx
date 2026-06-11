@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
+import { Instagram, MapPin } from "lucide-react";
 import { Layout } from "@/components/layout";
+import { IPhoneProIcon, SonyFX30Icon } from "@/components/camera-icons";
 import { Markdown } from "@/components/markdown";
 import { Reveal } from "@/components/reveal";
 import {
@@ -8,7 +10,30 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { photos, type Photo } from "@/lib/data";
+import { cameraLabels, photos, type Photo } from "@/lib/data";
+
+function CameraIcon({ photo, className }: { photo: Photo; className?: string }) {
+  return photo.camera === "iPhone" ? (
+    <IPhoneProIcon className={className} aria-hidden="true" />
+  ) : (
+    <SonyFX30Icon className={className} aria-hidden="true" />
+  );
+}
+
+// Icon-first pill: shows just the icon until hovered, then widens to reveal its label.
+function MetaChip({ icon, label }: { icon: ReactNode; label: string }) {
+  return (
+    <span
+      title={label}
+      className="group/chip pointer-events-auto inline-flex items-center rounded-full border border-white/15 bg-black/60 p-1.5 text-white backdrop-blur-md"
+    >
+      {icon}
+      <span className="max-w-0 overflow-hidden whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.14em] opacity-0 transition-[max-width,margin,opacity] duration-300 group-hover/chip:ml-1.5 group-hover/chip:mr-1 group-hover/chip:max-w-[12rem] group-hover/chip:opacity-100">
+        {label}
+      </span>
+    </span>
+  );
+}
 
 const Photos = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
@@ -38,11 +63,12 @@ const Photos = () => {
                 />
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent p-4 pt-12 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
                   <p className="font-display text-lg font-semibold leading-tight text-white">
-                    {photo.title ?? photo.caption ?? photo.series}
+                    {photo.title ?? photo.location}
                   </p>
-                  <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-white/70">
-                    {photo.series}
-                  </p>
+                  <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                    <MetaChip icon={<CameraIcon photo={photo} className="h-3.5 w-3.5" />} label={cameraLabels[photo.camera]} />
+                    <MetaChip icon={<MapPin className="h-3.5 w-3.5" aria-hidden="true" />} label={photo.location} />
+                  </div>
                 </div>
               </button>
             </Reveal>
@@ -67,12 +93,19 @@ const Photos = () => {
                   className="relative max-h-[58vh] w-full object-contain lg:max-h-[92vh]"
                 />
               </div>
-              <div className="min-h-0 overflow-y-auto p-6 md:p-8">
-                <div className="mb-5 inline-flex rounded-full border border-border bg-muted px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                  {selectedPhoto.series}
+              <div className="flex min-h-0 flex-col overflow-y-auto p-6 md:p-8">
+                <div className="mb-5 flex flex-wrap gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    <CameraIcon photo={selectedPhoto} className="h-3.5 w-3.5" />
+                    {cameraLabels[selectedPhoto.camera]}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+                    {selectedPhoto.location}
+                  </span>
                 </div>
                 <DialogTitle className="font-display text-3xl font-semibold leading-tight">
-                  {selectedPhoto.title ?? selectedPhoto.series}
+                  {selectedPhoto.title ?? selectedPhoto.location}
                 </DialogTitle>
                 <DialogDescription className={selectedPhoto.caption ? "mt-3 text-base leading-relaxed" : "sr-only"}>
                   {selectedPhoto.caption ?? selectedPhoto.alt}
@@ -86,6 +119,19 @@ const Photos = () => {
                     // story coming soon
                   </p>
                 )}
+                {selectedPhoto.instagram ? (
+                  <div className="mt-6 flex justify-end">
+                    <a
+                      href={selectedPhoto.instagram}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="View this photo on Instagram"
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                    >
+                      <Instagram className="h-4 w-4" />
+                    </a>
+                  </div>
+                ) : null}
               </div>
             </div>
           ) : null}

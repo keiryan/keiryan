@@ -39,7 +39,7 @@ const Writing = () => {
           ))}
         </div>
 
-        <ul className="mt-10 divide-y divide-border border-y border-border">
+        <ul className="mt-10 divide-y divide-border border-b border-border">
           {list.map((p) => (
             <li key={p.slug}>
               <Link to={`/writing/${p.slug}`} className="group block py-7">

@@ -61,8 +61,13 @@ export function LegoLoop() {
           .lego-drop { animation: none; }
         }
       `}</style>
-      <svg viewBox="-52 -100 172 188" width="280" height="306" aria-hidden="true">
-        <ellipse cx={38} cy={72} rx={86} ry={13} fill="currentColor" opacity={0.08} />
+      <svg viewBox="-60 -100 196 198" width="280" height="283" aria-hidden="true">
+        <defs>
+          <filter id="lego-shadow-blur" x="-15%" y="-100%" width="130%" height="300%">
+            <feGaussianBlur stdDeviation="3" />
+          </filter>
+        </defs>
+        <ellipse cx={38} cy={72} rx={86} ry={13} fill="currentColor" opacity={0.1} filter="url(#lego-shadow-blur)" />
         <Brick colors={blue} />
         <g transform={`translate(${offsetX} ${offsetY})`}>
           <g className="lego-drop">

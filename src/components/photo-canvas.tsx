@@ -24,6 +24,16 @@ const TILE_WIDTH = 330;
 const MOMENTUM_FRICTION = 0.86;
 const MIN_MOMENTUM_VELOCITY = 0.16;
 
+// Tile "physics": as the board pans, each tile trails the motion a touch and
+// swings a hair, then springs back to rest. Heavier (larger) tiles lag more.
+const LEAN_LIMIT = 26; // caps how much pan velocity feeds the lean
+const LEAN_EASE = 0.22; // how quickly a tile catches up to / settles from the target lean
+const LEAN_SETTLE = 0.05; // below this the lean is treated as at rest
+const LEAN_LAG = 0.85; // pixels of trailing drift per unit of leaned velocity
+const LEAN_LAG_MAX = 28; // hard cap on trailing drift (px)
+const LEAN_SWING = 0.22; // degrees of swing per unit of horizontal leaned velocity
+const LEAN_SWING_MAX = 3; // hard cap on swing (deg)
+
 type ViewState = {
   x: number;
   y: number;
@@ -71,7 +81,12 @@ export function PhotoCanvas({ photos, onSelectPhoto }: PhotoCanvasProps) {
   const momentumRef = useRef<number | null>(null);
   const velocityRef = useRef<Velocity>({ x: 0, y: 0 });
   const suppressNextClickRef = useRef(false);
+  const leanTargetRef = useRef<Velocity>({ x: 0, y: 0 });
+  const leanValueRef = useRef<Velocity>({ x: 0, y: 0 });
+  const leanRafRef = useRef<number | null>(null);
+  const reducedMotionRef = useRef(false);
   const [view, setView] = useState<ViewState>(() => getCenteredView(window.innerWidth, window.innerHeight));
+  const [lean, setLean] = useState<Velocity>({ x: 0, y: 0 });
   const photosBySrc = useMemo(() => new Map(photos.map((photo) => [photo.src, photo])), [photos]);
 
   const tiles = useMemo(
@@ -116,7 +131,23 @@ export function PhotoCanvas({ photos, onSelectPhoto }: PhotoCanvasProps) {
   }, [resetView]);
 
   useEffect(() => {
-    return () => stopMomentum();
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reducedMotionRef.current = query.matches;
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      reducedMotionRef.current = event.matches;
+      if (event.matches) setLeanTarget(0, 0);
+    };
+
+    query.addEventListener("change", handleChange);
+    return () => query.removeEventListener("change", handleChange);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      stopMomentum();
+      stopLean();
+    };
   }, []);
 
   function stopMomentum() {
@@ -127,6 +158,53 @@ export function PhotoCanvas({ photos, onSelectPhoto }: PhotoCanvasProps) {
     velocityRef.current = { x: 0, y: 0 };
   }
 
+  function stopLean() {
+    if (leanRafRef.current) {
+      window.cancelAnimationFrame(leanRafRef.current);
+      leanRafRef.current = null;
+    }
+  }
+
+  // Point the tiles' lean at the current pan velocity; the loop eases them there
+  // and back to rest, so flinging the board makes the photos trail and swing.
+  function setLeanTarget(x: number, y: number) {
+    if (reducedMotionRef.current) {
+      leanTargetRef.current = { x: 0, y: 0 };
+    } else {
+      leanTargetRef.current = {
+        x: clamp(x, -LEAN_LIMIT, LEAN_LIMIT),
+        y: clamp(y, -LEAN_LIMIT, LEAN_LIMIT),
+      };
+    }
+
+    if (leanRafRef.current != null) return;
+
+    const tick = () => {
+      const target = leanTargetRef.current;
+      const current = leanValueRef.current;
+      const nextX = current.x + (target.x - current.x) * LEAN_EASE;
+      const nextY = current.y + (target.y - current.y) * LEAN_EASE;
+      const atRest =
+        Math.abs(target.x) < LEAN_SETTLE &&
+        Math.abs(target.y) < LEAN_SETTLE &&
+        Math.abs(nextX) < LEAN_SETTLE &&
+        Math.abs(nextY) < LEAN_SETTLE;
+
+      if (atRest) {
+        leanValueRef.current = { x: 0, y: 0 };
+        setLean({ x: 0, y: 0 });
+        leanRafRef.current = null;
+        return;
+      }
+
+      leanValueRef.current = { x: nextX, y: nextY };
+      setLean({ x: nextX, y: nextY });
+      leanRafRef.current = window.requestAnimationFrame(tick);
+    };
+
+    leanRafRef.current = window.requestAnimationFrame(tick);
+  }
+
   function startMomentum() {
     if (momentumRef.current) window.cancelAnimationFrame(momentumRef.current);
 
@@ -135,6 +213,7 @@ export function PhotoCanvas({ photos, onSelectPhoto }: PhotoCanvasProps) {
 
       if (Math.abs(velocity.x) < MIN_MOMENTUM_VELOCITY && Math.abs(velocity.y) < MIN_MOMENTUM_VELOCITY) {
         stopMomentum();
+        setLeanTarget(0, 0);
         return;
       }
 
@@ -143,6 +222,8 @@ export function PhotoCanvas({ photos, onSelectPhoto }: PhotoCanvasProps) {
         x: current.x + velocity.x,
         y: current.y + velocity.y,
       }));
+
+      setLeanTarget(velocity.x, velocity.y);
 
       velocityRef.current = {
         x: velocity.x * MOMENTUM_FRICTION,
@@ -215,6 +296,7 @@ export function PhotoCanvas({ photos, onSelectPhoto }: PhotoCanvasProps) {
       x: clamp(velocity.x * 0.65, -28, 28),
       y: clamp(velocity.y * 0.65, -28, 28),
     };
+    setLeanTarget(velocityRef.current.x, velocityRef.current.y);
     startMomentum();
   }
 
@@ -260,6 +342,7 @@ export function PhotoCanvas({ photos, onSelectPhoto }: PhotoCanvasProps) {
       x: clamp((deltaX / deltaTime) * 9, -26, 26),
       y: clamp((deltaY / deltaTime) * 9, -26, 26),
     };
+    setLeanTarget(velocityRef.current.x, velocityRef.current.y);
     setView((current) => ({ ...current, x: current.x + deltaX, y: current.y + deltaY }));
   }
 
@@ -274,7 +357,11 @@ export function PhotoCanvas({ photos, onSelectPhoto }: PhotoCanvasProps) {
       }
       dragRef.current = null;
       event.currentTarget.releasePointerCapture(event.pointerId);
-      if (drag.moved) startMomentum();
+      if (drag.moved) {
+        startMomentum();
+      } else {
+        setLeanTarget(0, 0);
+      }
     }
   }
 
@@ -301,7 +388,7 @@ export function PhotoCanvas({ photos, onSelectPhoto }: PhotoCanvasProps) {
         onWheel={handleWheel}
       >
         <div
-          className="absolute left-0 top-0"
+          className="photo-board absolute left-0 top-0"
           style={{
             width: BOARD_WIDTH,
             height: BOARD_HEIGHT,
@@ -309,44 +396,71 @@ export function PhotoCanvas({ photos, onSelectPhoto }: PhotoCanvasProps) {
             transformOrigin: "0 0",
           }}
         >
+          {/* Spotlight: while one photo is hovered, only the *others* dim a touch so
+              focus lands on it. Darken with brightness (not opacity) so the tiles stay
+              opaque and the grid never shows through. Footprints never move. */}
+          <style>{`
+            .photo-board:has(button[data-photo-src]:hover) button[data-photo-src]:not(:hover) {
+              filter: brightness(0.78) saturate(0.95);
+            }
+            @media (hover: none) {
+              .photo-board:has(button[data-photo-src]:hover) button[data-photo-src]:not(:hover) {
+                filter: none;
+              }
+            }
+          `}</style>
           <div className="absolute inset-0 bg-[linear-gradient(hsl(var(--foreground)/0.055)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--foreground)/0.055)_1px,transparent_1px)] bg-[size:92px_92px]" />
-          {tiles.map(({ photo, x, y, width, height }, index) => (
-            <button
-              key={photo.src}
-              type="button"
-              data-photo-src={photo.src}
-              aria-label={`Open ${photo.title ?? photo.alt}`}
-              className={cn(
-                "group absolute overflow-hidden rounded-md border border-border/80 bg-card text-left shadow-[0_12px_28px_rgba(0,0,0,0.24)] outline-none transition-[box-shadow,transform]",
-                "hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(0,0,0,0.32)] focus-visible:-translate-y-1 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background",
-              )}
-              style={{
-                left: x,
-                top: y,
-                width,
-                zIndex: index + 1,
-              }}
-              onClick={(event) => handlePhotoClick(event, photo)}
-            >
-              <div className="relative overflow-hidden bg-muted" style={{ height }}>
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  loading={photo.featured ? "eager" : "lazy"}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] group-focus-visible:scale-[1.03]"
-                  draggable={false}
-                />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent p-3 pt-12 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-                  <p className="font-display text-base font-semibold leading-tight text-white">
-                    {photo.title ?? photo.location}
-                  </p>
-                  <p className="mt-1 font-mono text-[10px] uppercase text-white/75">
-                    {photo.location}
-                  </p>
-                </div>
+          {tiles.map(({ photo, x, y, width, height }, index) => {
+            // Larger tiles read as heavier, so they trail and swing a little more.
+            const depth = 0.7 + ((height - 250) / 220) * 0.7;
+            const lagX = clamp(-lean.x * LEAN_LAG * depth, -LEAN_LAG_MAX, LEAN_LAG_MAX);
+            const lagY = clamp(-lean.y * LEAN_LAG * depth, -LEAN_LAG_MAX, LEAN_LAG_MAX);
+            const swing = clamp(lean.x * LEAN_SWING * depth, -LEAN_SWING_MAX, LEAN_SWING_MAX);
+
+            return (
+              <div
+                key={photo.src}
+                className="absolute"
+                style={{
+                  left: x,
+                  top: y,
+                  width,
+                  zIndex: index + 1,
+                  transform: `translate3d(${lagX}px, ${lagY}px, 0) rotate(${swing}deg)`,
+                  willChange: "transform",
+                }}
+              >
+                <button
+                  type="button"
+                  data-photo-src={photo.src}
+                  aria-label={`Open ${photo.title ?? photo.alt}`}
+                  className={cn(
+                    "group block w-full overflow-hidden rounded-md border border-border/80 bg-card text-left shadow-[0_12px_28px_rgba(0,0,0,0.24)] outline-none transition-[box-shadow,opacity,filter,border-color] duration-300",
+                    "hover:border-foreground/25 hover:shadow-[0_20px_46px_rgba(0,0,0,0.45)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background",
+                  )}
+                  onClick={(event) => handlePhotoClick(event, photo)}
+                >
+                  <div className="relative overflow-hidden bg-muted" style={{ height }}>
+                    <img
+                      src={photo.src}
+                      alt={photo.alt}
+                      loading={photo.featured ? "eager" : "lazy"}
+                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05] group-focus-visible:scale-[1.05]"
+                      draggable={false}
+                    />
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent p-3 pt-12 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                      <p className="font-display text-base font-semibold leading-tight text-white">
+                        {photo.title ?? photo.location}
+                      </p>
+                      <p className="mt-1 font-mono text-[10px] uppercase text-white/75">
+                        {photo.location}
+                      </p>
+                    </div>
+                  </div>
+                </button>
               </div>
-            </button>
-          ))}
+            );
+          })}
         </div>
       </div>
 

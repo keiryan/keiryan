@@ -1,8 +1,10 @@
 import { type ReactNode, useState } from "react";
-import { Camera, Instagram, MapPin, Smartphone } from "lucide-react";
+import { Camera, Instagram, MapPin, Maximize2, Smartphone } from "lucide-react";
 import { Layout } from "@/components/layout";
 import { Markdown } from "@/components/markdown";
+import { PhotoCanvas } from "@/components/photo-canvas";
 import { Reveal } from "@/components/reveal";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -36,14 +38,29 @@ function MetaChip({ icon, label }: { icon: ReactNode; label: string }) {
 
 const Photos = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+  const [isCanvasOpen, setIsCanvasOpen] = useState(false);
 
   return (
     <Layout title="Photos">
       <section className="container-wide py-20">
-        <h1 className="font-display text-5xl font-bold">Photos</h1>
-        <p className="mt-4 max-w-prose text-lg text-muted-foreground">
-          A slow-growing collection of moments worth keeping.
-        </p>
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h1 className="font-display text-5xl font-bold">Photos</h1>
+            <p className="mt-4 max-w-prose text-lg text-muted-foreground">
+              A slow-growing collection of moments worth keeping.
+            </p>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-fit"
+            onClick={() => setIsCanvasOpen(true)}
+            aria-label="Open photo canvas"
+          >
+            <Maximize2 className="h-4 w-4" />
+            Open canvas
+          </Button>
+        </div>
 
         <div className="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3">
           {photos.map((photo, i) => (
@@ -74,6 +91,16 @@ const Photos = () => {
           ))}
         </div>
       </section>
+
+      <Dialog open={isCanvasOpen} onOpenChange={setIsCanvasOpen}>
+        <DialogContent className="left-0 top-0 h-[100dvh] w-screen max-w-none translate-x-0 translate-y-0 overflow-hidden rounded-none border-0 bg-transparent p-0 shadow-none sm:rounded-none">
+          <DialogTitle className="sr-only">Photo canvas</DialogTitle>
+          <DialogDescription className="sr-only">
+            A fullscreen canvas of photos that can be panned and zoomed.
+          </DialogDescription>
+          <PhotoCanvas photos={photos} onSelectPhoto={setSelectedPhoto} />
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={Boolean(selectedPhoto)} onOpenChange={(open) => !open && setSelectedPhoto(null)}>
         <DialogContent className="max-h-[92vh] w-[calc(100vw-2rem)] max-w-6xl overflow-hidden p-0">

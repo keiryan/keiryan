@@ -1,8 +1,9 @@
-import { type FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { type FormEvent, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { AlertCircle, Check, ExternalLink, Headphones, Loader2, Music2, Send, Youtube } from "lucide-react";
 
 import { Layout } from "@/components/layout";
+import { MusicGrid } from "@/components/music-grid";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,6 +25,17 @@ const musicSuggestionEndpoint =
   import.meta.env.VITE_MUSIC_SUGGESTION_ENDPOINT ?? `https://formsubmit.co/ajax/${siteConfig.email}`;
 
 const Hobbies = () => {
+  const location = useLocation();
+
+  // Scroll to the music section when arriving via the homepage "Listening" link.
+  useEffect(() => {
+    if (location.hash === "#music") {
+      requestAnimationFrame(() => {
+        document.getElementById("music")?.scrollIntoView({ behavior: "smooth" });
+      });
+    }
+  }, [location]);
+
   const [platform, setPlatform] = useState<Platform>("Apple Music");
   const [name, setName] = useState("");
   const [track, setTrack] = useState("");
@@ -155,15 +167,26 @@ const Hobbies = () => {
 
         {/* Music */}
         <Reveal>
-          <section className="mt-24">
+          <section id="music" className="mt-24 scroll-mt-24">
             <h2 className="font-display text-3xl font-semibold">Music</h2>
             <p className="prose-article">
               Always something playing. Genre is a mood: a focus playlist for ops days, something
-              loud for builds, something patient for evenings. The best additions lately have come
-              from other people, which is what the form below is for.
+              loud for builds, something patient for evenings. Here's what's been on heavy rotation
+              lately.
             </p>
 
-            <div className="mt-8 overflow-hidden rounded-lg border border-border bg-card/55">
+            <div className="mt-8 mb-6 flex items-end justify-between gap-4">
+              <p className="section-label">On repeat</p>
+              <p className="font-mono text-xs text-muted-foreground">tap to hear 30 seconds</p>
+            </div>
+            <MusicGrid />
+
+            <p className="prose-article mt-12">
+              The best additions lately have come from other people, which is what the form below is
+              for.
+            </p>
+
+            <div className="mt-6 overflow-hidden rounded-lg border border-border bg-card/55">
               <div className="border-b border-border bg-background/45 px-5 py-4">
                 <p className="font-display text-2xl font-semibold">Suggest a song</p>
                 <p className="mt-1 text-sm text-muted-foreground">

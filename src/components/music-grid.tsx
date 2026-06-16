@@ -1,6 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { Pause, Play } from "lucide-react";
+import { Pause, Play, Share2, X } from "lucide-react";
+import { AppleMusicIcon, SpotifyIcon, YouTubeIcon } from "@/components/brand-icons";
 import { onRepeat, type Track } from "@/lib/data";
+
+function serviceLinks(track: Track) {
+  const q = encodeURIComponent(`${track.title} ${track.artist}`);
+  return [
+    { name: "Apple Music", href: track.link, Icon: AppleMusicIcon },
+    { name: "Spotify", href: track.spotify ?? `https://open.spotify.com/search/${q}`, Icon: SpotifyIcon },
+    { name: "YouTube", href: track.youtube ?? `https://music.youtube.com/search?q=${q}`, Icon: YouTubeIcon },
+  ];
+}
 
 // Animated equalizer bars shown on the tile that's currently playing.
 function NowPlayingBars() {
@@ -26,8 +36,14 @@ function TrackTile({
   isPlaying: boolean;
   onToggle: () => void;
 }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const services = serviceLinks(track);
+
   return (
-    <div className="group/tile relative h-full w-full overflow-hidden rounded-xl border border-border bg-card">
+    <div
+      onMouseLeave={() => setMenuOpen(false)}
+      className="group/tile relative h-full w-full overflow-hidden rounded-xl border border-border bg-card"
+    >
       <img
         src={track.cover}
         alt={`${track.album} album art`}
@@ -40,7 +56,10 @@ function TrackTile({
       {/* play / pause — the whole tile is the button */}
       <button
         type="button"
-        onClick={onToggle}
+        onClick={() => {
+          setMenuOpen(false);
+          onToggle();
+        }}
         aria-label={`${isPlaying ? "Pause" : "Play 30 second preview of"} ${track.title} by ${track.artist}`}
         className="absolute inset-0 flex items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
       >
@@ -74,16 +93,37 @@ function TrackTile({
         </div>
       </div>
 
-      {/* open in Apple Music */}
-      <a
-        href={track.link}
-        target="_blank"
-        rel="noreferrer"
-        aria-label={`Open ${track.title} in Apple Music`}
-        className="absolute right-2 top-2 rounded-full bg-black/55 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-white opacity-0 backdrop-blur-md transition-opacity duration-200 hover:bg-black/75 group-hover/tile:opacity-100 focus-visible:opacity-100"
-      >
-        Open ↗
-      </a>
+      {/* service chooser — hidden until hover, expands on tap */}
+      <div className="absolute right-2 top-2 flex items-center gap-1.5 opacity-60 transition-opacity duration-200 group-hover/tile:opacity-100 focus-within:opacity-100 sm:opacity-0">
+        <div
+          className={`flex items-center gap-1 overflow-hidden transition-[max-width,opacity] duration-300 ${
+            menuOpen ? "max-w-[7rem] opacity-100" : "max-w-0 opacity-0"
+          }`}
+        >
+          {services.map((s) => (
+            <a
+              key={s.name}
+              href={s.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Open ${track.title} in ${s.name}`}
+              title={s.name}
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-md transition-colors hover:bg-black/80"
+            >
+              <s.Icon className="h-4 w-4" aria-hidden="true" />
+            </a>
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-label={menuOpen ? "Hide listening options" : "Open in a music service"}
+          aria-expanded={menuOpen}
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-md transition-colors hover:bg-black/80"
+        >
+          {menuOpen ? <X className="h-3.5 w-3.5" /> : <Share2 className="h-3.5 w-3.5" />}
+        </button>
+      </div>
     </div>
   );
 }

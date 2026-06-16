@@ -36,6 +36,9 @@ export type Track = {
   cover: string;
   preview: string;
   link: string;
+  /** Optional direct links. When absent, a service search link is generated. */
+  spotify?: string;
+  youtube?: string;
   featured?: boolean;
 };
 

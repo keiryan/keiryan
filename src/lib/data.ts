@@ -25,7 +25,7 @@ export const currently = [
   { label: "Playing", text: "Fortnite (3,500 hours and counting) and Overwatch.", to: "/hobbies" },
   { label: "Building", text: "This site, and writing down why it exists.", to: "/writing/why-i-built-this" },
   { label: "Shooting", text: "Macro spiders, travel, and the occasional handstand.", to: "/photos" },
-  { label: "Listening", text: "A handful of songs on heavy rotation. See below.", to: "#on-repeat" },
+  { label: "Listening", text: "A handful of songs on heavy rotation.", to: "/hobbies#music" },
   { label: "Working on", text: "Wrapping an AI ops contract at G2i. Open to what's next.", to: "/work" },
 ];
 

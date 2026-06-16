@@ -5,7 +5,6 @@ import { PolaroidPlaceholder } from "@/components/polaroid";
 import { currently, publishedPosts, siteConfig } from "@/lib/data";
 import { formatDate, readingTime } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
-import { MusicGrid } from "@/components/music-grid";
 
 const Index = () => {
   const recent = [...publishedPosts].sort((a, b) => +new Date(b.date) - +new Date(a.date)).slice(0, 3);
@@ -111,48 +110,22 @@ const Index = () => {
           <h2 className="section-label mb-8">Currently</h2>
         </Reveal>
         <dl className="divide-y divide-border border-y border-border">
-          {currently.map((item, i) => {
-            const isHash = item.to.startsWith("#");
-            const className =
-              "group grid gap-1 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-6";
-            const inner = (
-              <>
+          {currently.map((item, i) => (
+            <Reveal key={item.label} delay={i * 0.04}>
+              <Link
+                to={item.to}
+                className="group grid gap-1 py-5 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-6"
+              >
                 <dt className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
                   {item.label}
                 </dt>
                 <dd className="text-lg leading-relaxed transition-colors group-hover:text-primary">
                   {item.text}
                 </dd>
-              </>
-            );
-            return (
-              <Reveal key={item.label} delay={i * 0.04}>
-                {isHash ? (
-                  <a href={item.to} className={className}>
-                    {inner}
-                  </a>
-                ) : (
-                  <Link to={item.to} className={className}>
-                    {inner}
-                  </Link>
-                )}
-              </Reveal>
-            );
-          })}
+              </Link>
+            </Reveal>
+          ))}
         </dl>
-      </section>
-
-      {/* On repeat */}
-      <section id="on-repeat" className="container-wide scroll-mt-24 pb-24">
-        <Reveal>
-          <div className="mb-8 flex items-end justify-between gap-4">
-            <h2 className="section-label">On repeat</h2>
-            <p className="font-mono text-xs text-muted-foreground">tap to hear 30 seconds</p>
-          </div>
-        </Reveal>
-        <Reveal>
-          <MusicGrid />
-        </Reveal>
       </section>
     </Layout>
   );

@@ -13,14 +13,15 @@ import { Button } from "@/components/ui/button";
 import { type Photo } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
-const BOARD_WIDTH = 4200;
-const BOARD_HEIGHT = 3000;
+const BOARD_WIDTH = 5200;
+const BOARD_HEIGHT = 5200;
 const MIN_SCALE = 0.45;
 const MAX_SCALE = 1.8;
 const SCALE_STEP = 0.16;
-const GRID_COLUMNS = 5;
 const GRID_GAP = 10;
 const TILE_WIDTH = 330;
+const MIN_GRID_COLUMNS = 4;
+const MAX_GRID_COLUMNS = 10;
 const MOMENTUM_FRICTION = 0.86;
 const MIN_MOMENTUM_VELOCITY = 0.16;
 
@@ -70,9 +71,15 @@ function clamp(value: number, min: number, max: number) {
 function getCenteredView(width: number, height: number): ViewState {
   return {
     x: (width - BOARD_WIDTH) / 2,
-    y: (height - BOARD_HEIGHT) / 2 + 120,
+    y: (height - BOARD_HEIGHT) / 2 + 80,
     scale: 1,
   };
+}
+
+function getBalancedColumnCount(photoCount: number) {
+  if (photoCount <= 0) return MIN_GRID_COLUMNS;
+
+  return clamp(Math.ceil(Math.sqrt(photoCount * 1.15)), MIN_GRID_COLUMNS, MAX_GRID_COLUMNS);
 }
 
 export function PhotoCanvas({ photos, onSelectPhoto }: PhotoCanvasProps) {
@@ -91,18 +98,20 @@ export function PhotoCanvas({ photos, onSelectPhoto }: PhotoCanvasProps) {
 
   const tiles = useMemo(
     () => {
-      const columnHeights = Array.from({ length: GRID_COLUMNS }, (_, column) => column % 2 === 0 ? 0 : 72);
-      const gridWidth = GRID_COLUMNS * TILE_WIDTH + (GRID_COLUMNS - 1) * GRID_GAP;
-      const startX = (BOARD_WIDTH - gridWidth) / 2;
-      const startY = 420;
+      if (photos.length === 0) return [];
 
-      return photos.map((photo, index) => {
+      const columnCount = getBalancedColumnCount(photos.length);
+      const columnHeights = Array.from({ length: columnCount }, (_, column) => column % 2 === 0 ? 0 : 52);
+      const gridWidth = columnCount * TILE_WIDTH + (columnCount - 1) * GRID_GAP;
+      const startX = (BOARD_WIDTH - gridWidth) / 2;
+
+      const positionedTiles = photos.map((photo, index) => {
         const column = columnHeights.indexOf(Math.min(...columnHeights));
         const height = photoHeights[index % photoHeights.length];
         const tile = {
           photo,
           x: startX + column * (TILE_WIDTH + GRID_GAP),
-          y: startY + columnHeights[column],
+          y: columnHeights[column],
           width: TILE_WIDTH,
           height,
         };
@@ -110,6 +119,14 @@ export function PhotoCanvas({ photos, onSelectPhoto }: PhotoCanvasProps) {
 
         return tile;
       });
+
+      const gridHeight = Math.max(...columnHeights) - GRID_GAP;
+      const startY = (BOARD_HEIGHT - gridHeight) / 2;
+
+      return positionedTiles.map((tile) => ({
+        ...tile,
+        y: tile.y + startY,
+      }));
     },
     [photos],
   );

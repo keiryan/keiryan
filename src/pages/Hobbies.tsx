@@ -1,11 +1,18 @@
 import { type FormEvent, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { AlertCircle, Check, ExternalLink, Headphones, Loader2, Music2, Send, Youtube } from "lucide-react";
+import { AlertCircle, Check, ExternalLink, Headphones, Loader2, Maximize2, Music2, Send, Youtube } from "lucide-react";
 
 import { Layout } from "@/components/layout";
+import { MusicCanvas } from "@/components/music-canvas";
 import { MusicGrid } from "@/components/music-grid";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -36,6 +43,7 @@ const Hobbies = () => {
     }
   }, [location]);
 
+  const [isMusicCanvasOpen, setIsMusicCanvasOpen] = useState(false);
   const [platform, setPlatform] = useState<Platform>("Apple Music");
   const [name, setName] = useState("");
   const [track, setTrack] = useState("");
@@ -177,9 +185,32 @@ const Hobbies = () => {
 
             <div className="mt-8 mb-6 flex items-end justify-between gap-4">
               <p className="section-label">On repeat</p>
-              <p className="font-mono text-xs text-muted-foreground">tap to hear 30 seconds</p>
+              <div className="flex items-center gap-3">
+                <p className="hidden font-mono text-xs text-muted-foreground sm:block">tap to hear 30 seconds</p>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="w-fit"
+                  onClick={() => setIsMusicCanvasOpen(true)}
+                  aria-label="Open music canvas"
+                >
+                  <Maximize2 className="h-4 w-4" />
+                  Open canvas
+                </Button>
+              </div>
             </div>
             <MusicGrid />
+
+            <Dialog open={isMusicCanvasOpen} onOpenChange={setIsMusicCanvasOpen}>
+              <DialogContent className="left-0 top-0 h-[100dvh] w-screen max-w-none translate-x-0 translate-y-0 overflow-hidden rounded-none border-0 bg-transparent p-0 shadow-none sm:rounded-none">
+                <DialogTitle className="sr-only">Music canvas</DialogTitle>
+                <DialogDescription className="sr-only">
+                  A fullscreen canvas of music that can be panned and zoomed. Tap a tile to play a preview.
+                </DialogDescription>
+                <MusicCanvas />
+              </DialogContent>
+            </Dialog>
 
             <p className="prose-article mt-12">
               The best additions lately have come from other people, which is what the form below is

@@ -23,10 +23,10 @@ export const navLinks = [
 
 export const currently = [
   { label: "Playing", text: "Fortnite (3,500 hours and counting) and Overwatch.", to: "/hobbies" },
-  { label: "Building", text: "This site, and writing down why it exists.", to: "/writing/why-i-built-this" },
-  { label: "Shooting", text: "Macro spiders, travel, and the occasional handstand.", to: "/photos" },
-  { label: "Listening", text: "A handful of songs on heavy rotation.", to: "/hobbies#music" },
-  { label: "Working on", text: "Wrapping an AI ops contract at G2i. Open to what's next.", to: "/work" },
+  { label: "Building", text: "A lot of things. Including this site.", to: "/writing/why-i-built-this" },
+  { label: "Shooting", text: "Anything that catches my eye.", to: "/photos" },
+  { label: "Listening", text: "A handful of songs on heavy rotation. Recommendations?", to: "/hobbies#music" },
+  { label: "Working on", text: "Actually impactful AI solutions for SMBs.", to: "/work" },
 ];
 
 export type Track = {

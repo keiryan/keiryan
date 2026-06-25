@@ -707,6 +707,50 @@ export type Post = {
 
 export const posts: Post[] = [
   {
+    slug: "the-new-siri",
+    title: "The New Siri Blew Me Away",
+    date: "2026-06-24",
+    category: "Tech",
+    excerpt: "I expected a rebranded Gemini. What I got reminded me of the first time I tried ChatGPT, and it comes down to one thing: context.",
+    content: `I really like the new Siri. I am genuinely, deeply impressed with what Apple has managed to pull off here, especially with the smaller on-device version and the way the whole thing works.
+
+Let me start with what I expected, because it makes the surprise land harder.
+
+When Apple announced that Siri was getting an update, I think a lot of us assumed we were about to get a rebranded version of Gemini. That assumption made sense at the time. We had just found out that Apple had partnered with Google to use some of their LLM technology in this new assistant they were building, and honestly, given how it sounded, "Gemini with an Apple logo on it" did not feel like a crazy guess.
+
+Apple has since made it explicitly clear that this is not the case. Siri leverages some of the same underlying technology and capabilities that Google also uses for Gemini, but it is not Gemini rebranded. Siri is its own thing, with some Google-made technology sitting underneath it.
+
+So I came into this with pretty low expectations. The previous redesign of Siri, the one that was supposed to ship as Apple Intelligence a couple of years ago, if you can even call it a redesign, did not exactly leave me optimistic.
+
+This version absolutely blew me away.
+
+And when I say it blew me away, I do not just mean it was smarter than I expected, or more capable than the old one. I mean it genuinely left me speechless. It is one of the very few times I have interacted with a piece of technology and felt like something magical was happening. It reminded me of the first time I tried ChatGPT.
+
+It really comes down to one thing: personal context.
+
+It is incredible how much personal context Siri actually has now. The texts you have sent, the notes you have written, your journaling entries, your email, your photos, your browsing history, all of it. Siri has access to that data the same way you do, and it can leverage it to find things and answer questions in a way that genuinely feels like magic.
+
+Let me try to explain why that feels so different. As much as I love ChatGPT, and as much as I love Claude, every time I interact with those models there is a tax I have to pay first, and that tax is context. They are incredibly intelligent. They are frontier intelligence. But they always need me to explain the situation before they can help.
+
+I have come to believe that context is one of the biggest barriers to AI actually becoming economically valuable and finding its real place in everyday life. Right now most AI lives inside a chat box. You have to go to it, and you have to explain what you need before anything useful happens.
+
+Take something simple, like sending an email to your boss. With a normal assistant, you have to set the whole scene first. You are emailing your boss, who happens to be the VP of HR. Copied on the thread is the head of engineering and the VP of finance. Ideally you also give their names and explain how each of them relates to you, because otherwise the model is writing blind.
+
+With the new Siri, you do not have to do any of that. As long as that information lives somewhere on your phone, in your email, your texts, or your notes, Siri already has it, the same way you do. And suddenly it feels magical again. It feels like you finally have a real assistant living in your phone, one that just knows things.
+
+That, to me, is the actual barrier between most people and getting genuinely incredible use out of AI. And for as long as AI has been a thing, I have believed that Apple is in a uniquely strong position to cross it, precisely because of how much personal context they already hold for each of us.
+
+Apple owns the entire stack. The hardware, the software, and the services. That means they can connect all of those pieces together into an AI experience that nobody else can really replicate. External model providers like OpenAI and Anthropic can only integrate into whatever capabilities Apple chooses to expose on the device. They will always be missing the deep personal context that Apple has by default. Even Google, who also makes hardware, software, and services, cannot quite match it, because their hardware is not on the same level as Apple's.
+
+Here is the part I find most impressive, and it is not what you would expect. The thing that makes this experience so good is not that Siri is somehow more intelligent than every other assistant. At its core, even on the higher-end devices, it is roughly a 200 million parameter model that is sparsely activated. That is nowhere near frontier-level intelligence.
+
+But it runs entirely on device, which makes it feel truly private. And that combination, a small private model with deep access to your real context, ends up feeling more magical than a far smarter model that knows nothing about you. That is genuinely hard to put into words, and I think it is worth sitting with.
+
+And this is just the first version of it. It is going to be really exciting to see what this looks like on the new iPhone 18, and even more exciting to imagine where it lands two years or five years from now. Apple is uniquely positioned to deliver this kind of experience, and they are only getting started.
+
+Even the small stuff impresses me. I can open my photos, point Siri at a picture, and ask what my relationship is to the person in it, and it just knows. I keep stumbling into use cases like that. And this is only my first impression.`,
+  },
+  {
     slug: "the-ops-layer",
     title: "The Ops Layer Nobody Talks About",
     date: "2026-04-15",

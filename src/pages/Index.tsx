@@ -37,7 +37,12 @@ const Index = () => {
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">currently</p>
               <p className="mt-1 font-display text-lg leading-tight">writing things down</p>
             </div>
-            <PolaroidPlaceholder tilt={2} label="home office, Leland" />
+            <PolaroidPlaceholder
+              tilt={2}
+              src="/home-hero.jpg"
+              alt="Keiryan smiling at his home-office desk in front of several monitors."
+              label="home office, Leland"
+            />
             <div className="mt-6 grid gap-2 font-mono text-xs text-muted-foreground">
               <span className="border-l border-primary/60 pl-3">Scaled an AI ops org from 0 to 200 people</span>
               <span className="border-l border-primary/60 pl-3">3,500 hours in Fortnite, zero regrets</span>

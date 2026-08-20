@@ -1,0 +1,656 @@
+import {
+  type MouseEvent,
+  type PointerEvent,
+  type WheelEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { LocateFixed, Minus, Music2, Pause, Play, Plus, Share2, X } from "lucide-react";
+import { AppleMusicIcon, SpotifyIcon, YouTubeIcon } from "@/components/brand-icons";
+import { Button } from "@/components/ui/button";
+import { onRepeat, type Track } from "@/lib/data";
+import { cn } from "@/lib/utils";
+
+// Mechanics mirror PhotoCanvas (pan / zoom / momentum / inertia / spotlight),
+// but the tiles keep the music behavior: tap to play a preview, plus the
+// per-service links. Kept as a standalone component so the photo canvas is
+// untouched.
+
+const BOARD_WIDTH = 5200;
+const BOARD_HEIGHT = 5200;
+const MIN_SCALE = 0.45;
+const MAX_SCALE = 1.8;
+const SCALE_STEP = 0.16;
+const GRID_GAP = 16;
+const TILE_WIDTH = 300;
+const MIN_GRID_COLUMNS = 3;
+const MAX_GRID_COLUMNS = 8;
+const MOMENTUM_FRICTION = 0.86;
+const MIN_MOMENTUM_VELOCITY = 0.16;
+
+// Tile "physics": as the board pans, each tile trails the motion a touch and
+// swings a hair, then springs back to rest.
+const LEAN_LIMIT = 26;
+const LEAN_EASE = 0.22;
+const LEAN_SETTLE = 0.05;
+const LEAN_LAG = 0.85;
+const LEAN_LAG_MAX = 28;
+const LEAN_SWING = 0.22;
+const LEAN_SWING_MAX = 3;
+
+type ViewState = {
+  x: number;
+  y: number;
+  scale: number;
+};
+
+type DragState = {
+  pointerId: number;
+  startX: number;
+  startY: number;
+  lastX: number;
+  lastY: number;
+  lastTime: number;
+  moved: boolean;
+  trackId?: string;
+};
+
+type Velocity = {
+  x: number;
+  y: number;
+};
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function getCenteredView(width: number, height: number): ViewState {
+  return {
+    x: (width - BOARD_WIDTH) / 2,
+    y: (height - BOARD_HEIGHT) / 2 + 80,
+    scale: 1,
+  };
+}
+
+function getBalancedColumnCount(count: number) {
+  if (count <= 0) return MIN_GRID_COLUMNS;
+
+  return clamp(Math.ceil(Math.sqrt(count * 1.15)), MIN_GRID_COLUMNS, MAX_GRID_COLUMNS);
+}
+
+function serviceLinks(track: Track) {
+  const q = encodeURIComponent(`${track.title} ${track.artist}`);
+  return [
+    { name: "Apple Music", href: track.link, Icon: AppleMusicIcon },
+    { name: "Spotify", href: track.spotify ?? `https://open.spotify.com/search/${q}`, Icon: SpotifyIcon },
+    { name: "YouTube", href: track.youtube ?? `https://music.youtube.com/search?q=${q}`, Icon: YouTubeIcon },
+  ];
+}
+
+// Animated equalizer bars shown on the tile that's currently playing.
+function NowPlayingBars() {
+  return (
+    <span className="flex h-4 items-end gap-[2px]" aria-hidden="true">
+      {[0, 1, 2, 3].map((i) => (
+        <span
+          key={i}
+          className="eq-bar w-[3px] rounded-full bg-current"
+          style={{ animationDelay: `${i * 0.15}s` }}
+        />
+      ))}
+    </span>
+  );
+}
+
+function MusicCanvasTile({
+  track,
+  height,
+  isPlaying,
+  onActivate,
+}: {
+  track: Track;
+  height: number;
+  isPlaying: boolean;
+  onActivate: (event: MouseEvent<HTMLButtonElement>) => void;
+}) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const services = serviceLinks(track);
+
+  return (
+    <div
+      onMouseLeave={() => setMenuOpen(false)}
+      className="group/tile relative overflow-hidden rounded-xl border border-border bg-card shadow-[0_12px_28px_rgba(0,0,0,0.24)] transition-[box-shadow,border-color] duration-300 group-hover/wrap:shadow-[0_20px_46px_rgba(0,0,0,0.45)]"
+      style={{ height }}
+    >
+      <img
+        src={track.cover}
+        alt={`${track.album} album art`}
+        loading="lazy"
+        draggable={false}
+        className={cn(
+          "h-full w-full object-cover transition-[filter,transform] duration-300",
+          isPlaying ? "brightness-[0.6]" : "brightness-95 group-hover/tile:scale-[1.04]",
+        )}
+      />
+
+      {/* play / pause — the whole tile is the button */}
+      <button
+        type="button"
+        data-track-id={track.preview}
+        onClick={onActivate}
+        aria-label={`${isPlaying ? "Pause" : "Play 30 second preview of"} ${track.title} by ${track.artist}`}
+        className="absolute inset-0 flex items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+      >
+        <span
+          className={cn(
+            "flex h-14 w-14 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-md transition-all duration-200",
+            isPlaying ? "opacity-100" : "opacity-0 group-hover/tile:opacity-100",
+          )}
+        >
+          {isPlaying ? (
+            <Pause className="h-6 w-6" fill="currentColor" />
+          ) : (
+            <Play className="h-6 w-6 translate-x-[1px]" fill="currentColor" />
+          )}
+        </span>
+      </button>
+
+      {/* title / artist scrim */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent p-3 pt-10">
+        <div className="flex items-end justify-between gap-2">
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold leading-tight text-white">{track.title}</p>
+            <p className="truncate text-xs text-white/70">{track.artist}</p>
+          </div>
+          {isPlaying ? (
+            <span className="mb-0.5 shrink-0 text-primary">
+              <NowPlayingBars />
+            </span>
+          ) : null}
+        </div>
+      </div>
+
+      {/* service chooser — exempt from panning so links stay tappable */}
+      <div
+        data-canvas-control
+        className="absolute right-2 top-2 flex items-center gap-1.5 opacity-60 transition-opacity duration-200 group-hover/tile:opacity-100 focus-within:opacity-100 sm:opacity-0"
+      >
+        <div
+          className={cn(
+            "flex items-center gap-1 overflow-hidden transition-[max-width,opacity] duration-300",
+            menuOpen ? "max-w-[7rem] opacity-100" : "max-w-0 opacity-0",
+          )}
+        >
+          {services.map((s) => (
+            <a
+              key={s.name}
+              href={s.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Open ${track.title} in ${s.name}`}
+              title={s.name}
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-md transition-colors hover:bg-black/80"
+            >
+              <s.Icon className="h-4 w-4" aria-hidden="true" />
+            </a>
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-label={menuOpen ? "Hide listening options" : "Open in a music service"}
+          aria-expanded={menuOpen}
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-md transition-colors hover:bg-black/80"
+        >
+          {menuOpen ? <X className="h-3.5 w-3.5" /> : <Share2 className="h-3.5 w-3.5" />}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export function MusicCanvas() {
+  const viewportRef = useRef<HTMLDivElement | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const dragRef = useRef<DragState | null>(null);
+  const momentumRef = useRef<number | null>(null);
+  const velocityRef = useRef<Velocity>({ x: 0, y: 0 });
+  const suppressNextClickRef = useRef(false);
+  const leanTargetRef = useRef<Velocity>({ x: 0, y: 0 });
+  const leanValueRef = useRef<Velocity>({ x: 0, y: 0 });
+  const leanRafRef = useRef<number | null>(null);
+  const reducedMotionRef = useRef(false);
+  const [view, setView] = useState<ViewState>(() => getCenteredView(window.innerWidth, window.innerHeight));
+  const [lean, setLean] = useState<Velocity>({ x: 0, y: 0 });
+  const [playing, setPlaying] = useState<string | null>(null);
+
+  const tiles = useMemo(() => {
+    if (onRepeat.length === 0) return [];
+
+    const columnCount = getBalancedColumnCount(onRepeat.length);
+    const columnHeights: number[] = Array.from({ length: columnCount }, (_, column) => (column % 2 === 0 ? 0 : 40));
+    const gridWidth = columnCount * TILE_WIDTH + (columnCount - 1) * GRID_GAP;
+    const startX = (BOARD_WIDTH - gridWidth) / 2;
+
+    const positioned = onRepeat.map((track) => {
+      const column = columnHeights.indexOf(Math.min(...columnHeights));
+      const tile = {
+        track,
+        x: startX + column * (TILE_WIDTH + GRID_GAP),
+        y: columnHeights[column],
+        width: TILE_WIDTH,
+        height: TILE_WIDTH,
+      };
+      columnHeights[column] += TILE_WIDTH + GRID_GAP;
+
+      return tile;
+    });
+
+    const gridHeight = Math.max(...columnHeights) - GRID_GAP;
+    const startY = (BOARD_HEIGHT - gridHeight) / 2;
+
+    return positioned.map((tile) => ({ ...tile, y: tile.y + startY }));
+  }, []);
+
+  const trackByPreview = useMemo(() => new Map(onRepeat.map((track) => [track.preview, track])), []);
+
+  const toggle = useCallback((track: Track) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.src.endsWith(track.preview) && !audio.paused) {
+      audio.pause();
+      setPlaying(null);
+      return;
+    }
+
+    audio.src = track.preview;
+    audio.currentTime = 0;
+    void audio.play().then(
+      () => setPlaying(track.preview),
+      () => setPlaying(null),
+    );
+  }, []);
+
+  const resetView = useCallback(() => {
+    const viewport = viewportRef.current;
+
+    if (!viewport) return;
+
+    stopMomentum();
+    setView(getCenteredView(viewport.clientWidth, viewport.clientHeight));
+  }, []);
+
+  useEffect(() => {
+    resetView();
+    window.addEventListener("resize", resetView);
+
+    return () => window.removeEventListener("resize", resetView);
+  }, [resetView]);
+
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reducedMotionRef.current = query.matches;
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      reducedMotionRef.current = event.matches;
+      if (event.matches) setLeanTarget(0, 0);
+    };
+
+    query.addEventListener("change", handleChange);
+    return () => query.removeEventListener("change", handleChange);
+  }, []);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    return () => {
+      audio?.pause();
+      stopMomentum();
+      stopLean();
+    };
+  }, []);
+
+  function stopMomentum() {
+    if (momentumRef.current) {
+      window.cancelAnimationFrame(momentumRef.current);
+      momentumRef.current = null;
+    }
+    velocityRef.current = { x: 0, y: 0 };
+  }
+
+  function stopLean() {
+    if (leanRafRef.current) {
+      window.cancelAnimationFrame(leanRafRef.current);
+      leanRafRef.current = null;
+    }
+  }
+
+  function setLeanTarget(x: number, y: number) {
+    if (reducedMotionRef.current) {
+      leanTargetRef.current = { x: 0, y: 0 };
+    } else {
+      leanTargetRef.current = {
+        x: clamp(x, -LEAN_LIMIT, LEAN_LIMIT),
+        y: clamp(y, -LEAN_LIMIT, LEAN_LIMIT),
+      };
+    }
+
+    if (leanRafRef.current != null) return;
+
+    const tick = () => {
+      const target = leanTargetRef.current;
+      const current = leanValueRef.current;
+      const nextX = current.x + (target.x - current.x) * LEAN_EASE;
+      const nextY = current.y + (target.y - current.y) * LEAN_EASE;
+      const atRest =
+        Math.abs(target.x) < LEAN_SETTLE &&
+        Math.abs(target.y) < LEAN_SETTLE &&
+        Math.abs(nextX) < LEAN_SETTLE &&
+        Math.abs(nextY) < LEAN_SETTLE;
+
+      if (atRest) {
+        leanValueRef.current = { x: 0, y: 0 };
+        setLean({ x: 0, y: 0 });
+        leanRafRef.current = null;
+        return;
+      }
+
+      leanValueRef.current = { x: nextX, y: nextY };
+      setLean({ x: nextX, y: nextY });
+      leanRafRef.current = window.requestAnimationFrame(tick);
+    };
+
+    leanRafRef.current = window.requestAnimationFrame(tick);
+  }
+
+  function startMomentum() {
+    if (momentumRef.current) window.cancelAnimationFrame(momentumRef.current);
+
+    const tick = () => {
+      const velocity = velocityRef.current;
+
+      if (Math.abs(velocity.x) < MIN_MOMENTUM_VELOCITY && Math.abs(velocity.y) < MIN_MOMENTUM_VELOCITY) {
+        stopMomentum();
+        setLeanTarget(0, 0);
+        return;
+      }
+
+      setView((current) => ({
+        ...current,
+        x: current.x + velocity.x,
+        y: current.y + velocity.y,
+      }));
+
+      setLeanTarget(velocity.x, velocity.y);
+
+      velocityRef.current = {
+        x: velocity.x * MOMENTUM_FRICTION,
+        y: velocity.y * MOMENTUM_FRICTION,
+      };
+      momentumRef.current = window.requestAnimationFrame(tick);
+    };
+
+    momentumRef.current = window.requestAnimationFrame(tick);
+  }
+
+  const zoomAtPoint = useCallback((clientX: number, clientY: number, nextScale: number) => {
+    const viewport = viewportRef.current;
+
+    if (!viewport) return;
+
+    const bounds = viewport.getBoundingClientRect();
+    const pointX = clientX - bounds.left;
+    const pointY = clientY - bounds.top;
+
+    setView((current) => {
+      const clampedScale = clamp(nextScale, MIN_SCALE, MAX_SCALE);
+      const boardX = (pointX - current.x) / current.scale;
+      const boardY = (pointY - current.y) / current.scale;
+
+      return {
+        x: pointX - boardX * clampedScale,
+        y: pointY - boardY * clampedScale,
+        scale: clampedScale,
+      };
+    });
+  }, []);
+
+  const zoomFromCenter = useCallback(
+    (direction: 1 | -1) => {
+      const viewport = viewportRef.current;
+
+      if (!viewport) return;
+
+      zoomAtPoint(
+        viewport.clientWidth / 2,
+        viewport.clientHeight / 2,
+        view.scale + direction * SCALE_STEP,
+      );
+    },
+    [view.scale, zoomAtPoint],
+  );
+
+  function handleWheel(event: WheelEvent<HTMLDivElement>) {
+    event.preventDefault();
+
+    if (event.ctrlKey || event.metaKey) {
+      const zoomDelta = event.deltaY > 0 ? -SCALE_STEP : SCALE_STEP;
+      zoomAtPoint(event.clientX, event.clientY, view.scale + zoomDelta);
+      return;
+    }
+
+    stopMomentum();
+    const velocity = {
+      x: -event.deltaX,
+      y: -event.deltaY,
+    };
+
+    setView((current) => ({
+      ...current,
+      x: current.x + velocity.x,
+      y: current.y + velocity.y,
+    }));
+    velocityRef.current = {
+      x: clamp(velocity.x * 0.65, -28, 28),
+      y: clamp(velocity.y * 0.65, -28, 28),
+    };
+    setLeanTarget(velocityRef.current.x, velocityRef.current.y);
+    startMomentum();
+  }
+
+  function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
+    const target = event.target as HTMLElement;
+    const control = target.closest("[data-canvas-control]");
+    const trackButton = target.closest<HTMLButtonElement>("[data-track-id]");
+
+    if (control) return;
+
+    stopMomentum();
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      lastX: event.clientX,
+      lastY: event.clientY,
+      lastTime: event.timeStamp,
+      moved: false,
+      trackId: trackButton?.dataset.trackId,
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  }
+
+  function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
+    const drag = dragRef.current;
+
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    const deltaX = event.clientX - drag.lastX;
+    const deltaY = event.clientY - drag.lastY;
+    const deltaTime = Math.max(16, event.timeStamp - drag.lastTime);
+    const moved = drag.moved || Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) > 6;
+
+    dragRef.current = {
+      ...drag,
+      lastX: event.clientX,
+      lastY: event.clientY,
+      lastTime: event.timeStamp,
+      moved,
+    };
+    velocityRef.current = {
+      x: clamp((deltaX / deltaTime) * 9, -26, 26),
+      y: clamp((deltaY / deltaTime) * 9, -26, 26),
+    };
+    setLeanTarget(velocityRef.current.x, velocityRef.current.y);
+    setView((current) => ({ ...current, x: current.x + deltaX, y: current.y + deltaY }));
+  }
+
+  function handlePointerUp(event: PointerEvent<HTMLDivElement>) {
+    const drag = dragRef.current;
+
+    if (drag?.pointerId === event.pointerId) {
+      // If this drag panned, swallow the click it would otherwise fire on the tile.
+      suppressNextClickRef.current = Boolean(drag.moved && drag.trackId);
+      // A clean tap plays here: pointer capture means the tile's own click event
+      // won't fire, so we toggle directly (mirrors PhotoCanvas's select-on-up).
+      if (!drag.moved && drag.trackId) {
+        const track = trackByPreview.get(drag.trackId);
+        if (track) toggle(track);
+      }
+      dragRef.current = null;
+      event.currentTarget.releasePointerCapture(event.pointerId);
+      if (drag.moved) {
+        startMomentum();
+      } else {
+        setLeanTarget(0, 0);
+      }
+    }
+  }
+
+  function handleTrackClick(event: MouseEvent<HTMLButtonElement>, track: Track) {
+    if (suppressNextClickRef.current) {
+      suppressNextClickRef.current = false;
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
+    toggle(track);
+  }
+
+  return (
+    <div className="relative h-[100dvh] overflow-hidden bg-background text-foreground">
+      <audio ref={audioRef} onEnded={() => setPlaying(null)} preload="none" />
+
+      <div
+        ref={viewportRef}
+        className="absolute inset-0 cursor-grab touch-none overflow-hidden active:cursor-grabbing"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        onWheel={handleWheel}
+      >
+        <div
+          className="music-board absolute left-0 top-0"
+          style={{
+            width: BOARD_WIDTH,
+            height: BOARD_HEIGHT,
+            transform: `translate3d(${view.x}px, ${view.y}px, 0) scale(${view.scale})`,
+            transformOrigin: "0 0",
+          }}
+        >
+          {/* Spotlight: while one tile is hovered, the others dim a touch (brightness,
+              so the tiles stay opaque and the grid never shows through). */}
+          <style>{`
+            .music-board:has([data-track-tile]:hover) [data-track-tile]:not(:hover) {
+              filter: brightness(0.7) saturate(0.92);
+            }
+            @media (hover: none) {
+              .music-board:has([data-track-tile]:hover) [data-track-tile]:not(:hover) {
+                filter: none;
+              }
+            }
+          `}</style>
+          <div className="absolute inset-0 bg-[linear-gradient(hsl(var(--foreground)/0.055)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--foreground)/0.055)_1px,transparent_1px)] bg-[size:92px_92px]" />
+          {tiles.map(({ track, x, y, width, height }, index) => {
+            const depth = 0.7 + ((height - 250) / 220) * 0.7;
+            const lagX = clamp(-lean.x * LEAN_LAG * depth, -LEAN_LAG_MAX, LEAN_LAG_MAX);
+            const lagY = clamp(-lean.y * LEAN_LAG * depth, -LEAN_LAG_MAX, LEAN_LAG_MAX);
+            const swing = clamp(lean.x * LEAN_SWING * depth, -LEAN_SWING_MAX, LEAN_SWING_MAX);
+
+            return (
+              <div
+                key={track.preview}
+                data-track-tile
+                className="group/wrap absolute"
+                style={{
+                  left: x,
+                  top: y,
+                  width,
+                  zIndex: index + 1,
+                  transform: `translate3d(${lagX}px, ${lagY}px, 0) rotate(${swing}deg)`,
+                  willChange: "transform",
+                }}
+              >
+                <MusicCanvasTile
+                  track={track}
+                  height={height}
+                  isPlaying={playing === track.preview}
+                  onActivate={(event) => handleTrackClick(event, track)}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_180px_rgba(0,0,0,0.34)]" />
+
+      <div className="pointer-events-none absolute left-4 top-4 z-10 flex max-w-[calc(100%-5rem)] flex-wrap items-center gap-2 sm:left-6 sm:top-6">
+        <div data-canvas-control className="pointer-events-auto flex items-center gap-2 rounded-lg border border-border bg-card/85 px-3 py-2 shadow-sm backdrop-blur">
+          <Music2 className="h-4 w-4" aria-hidden="true" />
+          <span className="font-mono text-xs uppercase text-muted-foreground">On repeat</span>
+        </div>
+        <div data-canvas-control className="pointer-events-auto flex items-center gap-1 rounded-lg border border-border bg-card/85 p-1 shadow-sm backdrop-blur">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 text-muted-foreground hover:bg-muted hover:text-foreground"
+            onClick={() => zoomFromCenter(-1)}
+            aria-label="Zoom out"
+          >
+            <Minus className="h-4 w-4" />
+          </Button>
+          <span className="min-w-12 text-center font-mono text-xs text-muted-foreground">
+            {Math.round(view.scale * 100)}%
+          </span>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 text-muted-foreground hover:bg-muted hover:text-foreground"
+            onClick={() => zoomFromCenter(1)}
+            aria-label="Zoom in"
+          >
+            <Plus className="h-4 w-4" />
+          </Button>
+        </div>
+        <Button
+          type="button"
+          variant="secondary"
+          size="sm"
+          data-canvas-control
+          className="pointer-events-auto border border-border bg-card/85 text-muted-foreground shadow-sm backdrop-blur hover:bg-card hover:text-foreground"
+          onClick={resetView}
+        >
+          <LocateFixed className="h-4 w-4" />
+          Reset view
+        </Button>
+      </div>
+    </div>
+  );
+}
